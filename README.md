@@ -11,7 +11,7 @@ vision:
 
 ![recess](./recess.png)
 
-# run
+# to run
 
 the backend will run on localhost:8000 and the frontend will be accessible on localhost:3000.
 
@@ -35,4 +35,10 @@ cd frontend
 yarn install
 yarn start
 ```
+
+# to use
+
+- create an account
+- import a feed. here's a suggestion: `https://memoirsandrambles.substack.com/feed` :)
+- play around
 
