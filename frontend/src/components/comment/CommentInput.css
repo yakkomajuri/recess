@@ -1,0 +1,21 @@
+.comment-input-container {
+    margin-top: 20px; /* Adjust spacing as needed */
+    background-color: #f9f9f9; /* Light background color */
+    padding: 16px; /* Padding around input and button */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid #eaeaea; /* Light border for definition */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between textarea and button */
+}
+
+.comment-textarea {
+    border-radius: 8px; /* Rounded corners for the textarea */
+    border: 1px solid #eaeaea; /* Light border for textarea */
+}
+
+.submit-comment-button {
+    align-self: flex-end; /* Position the submit button to the right */
+    border-radius: 8px; /* Rounded corners for the button */
+}

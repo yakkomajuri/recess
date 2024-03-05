@@ -1,0 +1,24 @@
+# What you were doing when you last stopped
+- 
+
+# TODO:
+- Profile
+- Feed auto-reloads
+- Responsive design
+- Feed ownership stuff
+
+# Known performance issues
+- Lacking pagination
+- One request per feed following
+
+# Important refactors needed
+- Feed following buttons (extract?)
+- Sort out user!
+- Clean up useState and useEffect
+
+
+# Ideas
+- Consolidate Timeline and Explore?
+- Allow accessing timeline without logging in, show some explore equivalent without follow buttons
+- Play with color palette
+- Suggest feeds to follow if you dont follow any

@@ -1,0 +1,110 @@
+html {
+    background-color: rgb(249 249 249);
+}
+
+/* Antd overrides */
+.side-nav {
+    .menu-btn {
+        button {
+            border-radius: 16px;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    .menu-btn:hover {
+        background-color: transparent !important;
+    }
+
+    .ant-menu-item-selected {
+        background-color: transparent;
+    }
+
+    .ant-menu-item {
+        font-size: 24px;
+        font-weight: 200;
+        padding: 24px;
+    }
+}
+
+.timeline-post-card {
+    .ant-card-meta-title {
+        font-weight: 200;
+        color: rgb(111, 111, 111);
+    }
+
+    .ant-card-meta-title:hover {
+        color: rgb(40, 54, 69);
+    }
+}
+
+.back-to-timeline-btn {
+    color: #818181;
+}
+
+.back-to-timeline-btn:hover {
+    color: #5d5d5d;
+    cursor: pointer;
+}
+
+.feed-card {
+    background: #fafafa;
+
+    .ant-card-actions {
+        background: #fafafa;
+    }
+}
+
+.explore-page,
+.following-page,
+.timeline-page {
+    .ant-card-meta-title:hover {
+        color: rgb(96, 96, 97);
+        cursor: pointer;
+    }
+}
+
+.post-page {
+    .ant-card:hover {
+        cursor: default;
+        box-shadow: none;
+        border-color: 1px solid #f0f0f0;
+    }
+
+    /* .timeline-post-card .comment-post:hover {
+        color: inherit;
+        cursor: default;
+    } */
+}
+
+.like-post.active {
+    color: #1677ff;
+}
+
+.small-iframe-container iframe {
+    width: 100%; /* Makes the iframe responsive */
+    height: 300px; /* Fixed height, but you can make it responsive as well */
+    border: none; /* Removes the default border */
+    /* Additional styles for aesthetics */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ant-avatar img {
+    object-fit: contain; /* Adjust as needed: cover, fill, contain, etc. */
+}
+
+.trending-feeds-li:hover {
+    cursor: pointer;
+    opacity: 75%;
+}
+
+.app-header .platform-name {
+    font-size: 32px;
+    color: rgb(51 168 255);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 300;
+    letter-spacing: 1px;
+}
