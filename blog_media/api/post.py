@@ -4,6 +4,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from backend.models import Post, PostComment
 from rest_framework.decorators import action
+from blog_media.api.api_utils import get_paginated_queryset
+from blog_media.settings import DEFAULT_PAGE_SIZE
+
 
 def _add_user_metadata_to_posts(posts, user):
     for post in posts:
@@ -59,29 +62,50 @@ class PostViewset(viewsets.ModelViewSet):
         context = super().get_serializer_context()
         context.update({"request": self.request})
         return context
+
         
     @action(methods=["GET"], detail=False, permission_classes=[AllowAny()])
     def explore(self, request, **kwargs):
+        page = int(self.request.GET.get('page', 0))
         if request.user:
             queryset = Post.objects.exclude(feed__in=request.user.feeds_following.all()).order_by("-post_published_date")
         else:
             queryset = Post.objects.all().order_by("-post_published_date")
+            
+        queryset = get_paginated_queryset(queryset, page)
+
         serializer = PostSerializer(queryset, many=True, context=self.get_serializer_context())
-        return Response(_add_user_metadata_to_posts(serializer.data, request.user), status=200)
+        return Response(
+            { 
+             "data": _add_user_metadata_to_posts(serializer.data, request.user), 
+             "count": len(queryset), 
+             "current_page": page, 
+             "next_page": page + 1 if len(queryset) >= DEFAULT_PAGE_SIZE else None  
+            }, 
+            status=200
+        )
     
     # should this be handled as a query param on the get_queryset method?
     @action(methods=["GET"], detail=False)
     def timeline(self, request, **kwargs):
-        user = self.request.user
-        queryset = None
-        if user.feeds_following.count() == 0:
+        page = int(self.request.GET.get('page', 0))
+        if request.user.feeds_following.count() == 0:
             queryset = Post.objects.exclude().order_by("-post_published_date")
         else:
-            queryset = Post.objects.filter(feed__in=user.feeds_following.all()).order_by("-post_published_date")
+            queryset = Post.objects.filter(feed__in=request.user.feeds_following.all()).order_by("-post_published_date")
+
+        queryset = get_paginated_queryset(queryset, page)
 
         serializer = PostSerializer(queryset, many=True, context=self.get_serializer_context())
-        return Response(_add_user_metadata_to_posts(serializer.data, request.user), status=200)
-    
+        return Response(
+            { 
+             "data": _add_user_metadata_to_posts(serializer.data, request.user), 
+             "count": len(queryset), 
+             "current_page": page, 
+             "next_page": page + 1 if len(queryset) >= DEFAULT_PAGE_SIZE else None  
+            }, 
+            status=200
+        )    
 
         
     @action(methods=["POST"], detail=True)

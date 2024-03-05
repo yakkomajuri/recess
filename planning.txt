@@ -8,13 +8,15 @@
 - Feed ownership stuff
 
 # Known performance issues
-- Lacking pagination
 - One request per feed following
 
 # Important refactors needed
-- Feed following buttons (extract?)
 - Sort out user!
 - Clean up useState and useEffect
+- Standardize pagination
+- Error handling
+- Improve pagination
+- Feed following buttons (extract?)
 
 
 # Ideas
@@ -22,3 +24,4 @@
 - Allow accessing timeline without logging in, show some explore equivalent without follow buttons
 - Play with color palette
 - Suggest feeds to follow if you dont follow any
+- Add analytics

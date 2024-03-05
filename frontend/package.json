@@ -1,57 +1,57 @@
 {
-    "name": "frontend",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@testing-library/jest-dom": "^5.14.1",
-        "@testing-library/react": "^13.0.0",
-        "@testing-library/user-event": "^13.2.1",
-        "@types/jest": "^27.0.1",
-        "@types/node": "^16.7.13",
-        "@types/react": "^18.0.0",
-        "@types/react-dom": "^18.0.0",
-        "antd": "^5.14.1",
-        "axios": "^1.6.7",
-        "crypto-js": "^4.2.0",
-        "kea": "^3.1.6",
-        "kea-loaders": "^3.0.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-router-dom": "^6.22.1",
-        "react-scripts": "5.0.1",
-        "typescript": "^4.4.2",
-        "web-vitals": "^2.1.0"
-    },
-    "scripts": {
-        "start": "concurrently \"yarn start:app\" \"yarn start:kea\" -n APP,KEA -c blue,green",
-        "start:app": "react-scripts start",
-        "start:kea": "kea-typegen watch --write-paths",
-        "build": "esbuild ./src/index.js --bundle --minify --sourcemap --outdir=./build && copyfiles -u 1 ./public/index.html ./build",
-        "serve": "serve -s build"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "@types/crypto-js": "^4.2.2",
-        "concurrently": "^8.2.2",
-        "copyfiles": "^2.4.1",
-        "esbuild": "^0.20.1",
-        "kea-typegen": "^3.3.4"
-    }
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "antd": "^5.14.1",
+    "axios": "^1.6.7",
+    "crypto-js": "^4.2.0",
+    "kea": "^3.1.6",
+    "kea-loaders": "^3.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "concurrently \"yarn start:app\" \"yarn start:kea\" -n APP,KEA -c blue,green",
+    "start:app": "react-scripts start",
+    "start:kea": "kea-typegen watch --write-paths",
+    "build": "esbuild ./src/index.js --bundle --minify --sourcemap --outdir=./build && copyfiles -u 1 ./public/index.html ./build",
+    "serve": "serve -s build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
+    "esbuild": "^0.20.1",
+    "kea-typegen": "^3.3.4"
+  }
 }
