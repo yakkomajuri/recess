@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0006_alter_postcomment_comment_author'),
+        ('recess', '0006_alter_postcomment_comment_author'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='postcomment',
             name='parent_comment',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='backend.postcomment'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='recess.postcomment'),
         ),
     ]

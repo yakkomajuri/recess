@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0004_feed_feed_description'),
+        ('recess', '0004_feed_feed_description'),
     ]
 
     operations = [
@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='feeds_following',
-            field=models.ManyToManyField(blank=True, related_name='feeds_following', to='backend.feed'),
+            field=models.ManyToManyField(blank=True, related_name='feeds_following', to='recess.feed'),
         ),
     ]

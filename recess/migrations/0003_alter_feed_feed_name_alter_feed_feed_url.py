@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0002_feed_feed_picture_url_alter_user_feeds_following'),
+        ('recess', '0002_feed_feed_picture_url_alter_user_feeds_following'),
     ]
 
     operations = [

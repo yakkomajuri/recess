@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0005_feed_feed_original_importer_feed_feed_owner_and_more'),
+        ('recess', '0005_feed_feed_original_importer_feed_feed_owner_and_more'),
     ]
 
     operations = [

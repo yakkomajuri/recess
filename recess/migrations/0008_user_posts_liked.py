@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0007_postcomment_parent_comment'),
+        ('recess', '0007_postcomment_parent_comment'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='user',
             name='posts_liked',
-            field=models.ManyToManyField(blank=True, related_name='liked_posts', to='backend.post'),
+            field=models.ManyToManyField(blank=True, related_name='liked_posts', to='recess.post'),
         ),
     ]

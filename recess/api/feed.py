@@ -1,5 +1,5 @@
 from rest_framework import serializers, viewsets, response
-from backend.models import Feed, Post
+from recess.models import Feed, Post
 import feedparser
 from uuid import uuid4
 from email.utils import parsedate_to_datetime

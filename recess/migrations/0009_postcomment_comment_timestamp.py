@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0008_user_posts_liked'),
+        ('recess', '0008_user_posts_liked'),
     ]
 
     operations = [

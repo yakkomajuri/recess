@@ -2,7 +2,7 @@ import html
 from rest_framework import serializers, viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from backend.models import Post, PostComment
+from recess.models import Post, PostComment
 from rest_framework.decorators import action
 from recess.api.api_utils import get_paginated_queryset
 from recess.settings import DEFAULT_PAGE_SIZE

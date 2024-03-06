@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
-                ('feeds_following', models.ManyToManyField(blank=True, null=True, to='backend.feed')),
+                ('feeds_following', models.ManyToManyField(blank=True, null=True, to='recess.feed')),
             ],
             options={
                 'verbose_name': 'user',
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
                 ('post_published_date', models.DateTimeField()),
                 ('post_like_count', models.PositiveIntegerField(default=0)),
                 ('post_comment_count', models.PositiveIntegerField(default=0)),
-                ('feed', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='backend.feed')),
+                ('feed', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recess.feed')),
             ],
         ),
         migrations.CreateModel(
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
                 ('comment_uuid', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('comment_author', models.CharField(max_length=100)),
                 ('comment_content', models.CharField(max_length=1000)),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='backend.post')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recess.post')),
             ],
         ),
     ]

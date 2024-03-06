@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
-from backend.models import Feed
+from recess.models import Feed
 from django.core.exceptions import ValidationError
 
 User = get_user_model()

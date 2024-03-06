@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0009_postcomment_comment_timestamp'),
+        ('recess', '0009_postcomment_comment_timestamp'),
     ]
 
     operations = [
