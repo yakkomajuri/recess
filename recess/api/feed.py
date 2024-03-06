@@ -2,27 +2,11 @@ from rest_framework import serializers, viewsets, response
 from recess.models import Feed, Post
 import feedparser
 from uuid import uuid4
-from email.utils import parsedate_to_datetime
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticated
-import html
+from rest_framework.permissions import IsAuthenticated
 import requests
-import datetime
-
-
-
-# extract this later and consider all possibilities
-def parse_date(entry):
-    try:
-        return parsedate_to_datetime(entry['published'] or entry['pubDate'])
-    except Exception:
-        pass
-    
-    try:
-        return datetime.datetime.fromisoformat(entry['published'] or entry['pubDate'])
-    except Exception as e:
-        print(e)
-        pass
+from email.utils import parsedate_to_datetime
+from recess.feed_utils import parse_date
     
 
 class FeedSerializer(serializers.ModelSerializer):
@@ -38,6 +22,8 @@ class FeedSerializer(serializers.ModelSerializer):
         feed_name = rss_feed.feed.title # this needs error handling
         feed_description = rss_feed.feed.description # this needs error handling
         feed_picture_url = ''
+        feed_last_publish = parsedate_to_datetime(rss_feed.feed.updated) if rss_feed.feed.updated is not None else None
+        
         if hasattr(rss_feed.feed, 'image') and hasattr(rss_feed.feed.image, 'href'):
             feed_picture_url = rss_feed.feed.image.href 
         elif hasattr(rss_feed.feed, 'author') and hasattr(rss_feed.feed.author, 'logo'):
@@ -47,12 +33,21 @@ class FeedSerializer(serializers.ModelSerializer):
             if res.status_code == 200:
                 feed_picture_url = rss_feed.feed.link + '/favicon.ico'
         
-        res = super().create( { **validated_data, **{ "feed_uuid": feed_uuid, "feed_name": feed_name, "feed_description": feed_description, "feed_picture_url": feed_picture_url }})
+        feed_data = {
+            **validated_data,
+            "feed_uuid": feed_uuid,
+            "feed_name": feed_name,
+            "feed_description": feed_description,
+            "feed_picture_url": feed_picture_url,
+            "feed_last_publish": feed_last_publish,
+        }
+        res = super().create(feed_data)
         for entry in rss_feed.entries:
             try:
                 post_published_date = parse_date(entry)
-            except Exception:
-                return response.Response(status=417, data={ "detail": "Invalid date on posts"})
+            except Exception as e:
+                print(e)
+                # return response.Response(status=417, data={ "detail": "Invalid date on posts"})
             Post.objects.create(
                 feed = Feed.objects.get(feed_uuid=feed_uuid),
                 post_url = entry['link'],

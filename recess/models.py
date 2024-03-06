@@ -19,8 +19,13 @@ class Feed(models.Model):
     feed_url = models.URLField(unique=True)
     feed_name = models.CharField(max_length=200)
     feed_follower_count = models.IntegerField(default = 0)
-    feed_last_updated = models.DateTimeField(default=datetime.datetime.now)
-    feed_last_updated = models.DateTimeField(default=datetime.datetime.now)
+    
+    # this is when we last fetched the data and updated the feed
+    feed_last_updated = models.DateTimeField(default=datetime.datetime.now) 
+    
+    # this is when the feed was last published according to its metadata
+    feed_last_publish = models.DateTimeField(default=datetime.datetime.now)
+    
     feed_picture_url = models.URLField(null=True, blank=True)
     feed_description = models.CharField(max_length=1000)
     feed_original_importer = models.ForeignKey(User, related_name='imported_feeds', on_delete=models.CASCADE, blank=True, null=True)

@@ -5,6 +5,7 @@
 - Feed auto-reloads
 - Responsive design
 - Feed ownership stuff
+- Basic errors to frontend e.g. feed exists
 
 # Known performance issues
 - One request per feed following

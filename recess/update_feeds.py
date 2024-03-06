@@ -1,0 +1,72 @@
+import time
+from recess.models import Feed, Post
+import feedparser
+import requests
+from email.utils import parsedate_to_datetime
+from recess.feed_utils import parse_date
+
+
+
+def update_feeds():
+    while True:
+        print('running!')
+        for feed in Feed.objects.all():
+            try:
+                print(feed)
+                rss_feed = feedparser.parse(feed.feed_url)
+                feed_last_publish = parsedate_to_datetime(rss_feed.feed.updated) if rss_feed.feed.updated is not None else None
+                
+                
+                # if the feed declares when it was published and that hasn't changed since we last imported it, no need to update
+                if (feed_last_publish is not None) and (feed_last_publish == feed.feed_last_publish):
+                    continue
+                
+                feed.feed_name = rss_feed.feed.title
+                feed.feed_description = rss_feed.feed.description
+                feed_picture_url = ''
+                if hasattr(rss_feed.feed, 'image') and hasattr(rss_feed.feed.image, 'href'):
+                    feed_picture_url = rss_feed.feed.image.href 
+                elif hasattr(rss_feed.feed, 'author') and hasattr(rss_feed.feed.author, 'logo'):
+                    feed_picture_url = rss_feed.author.logo 
+                elif hasattr(rss_feed.feed, 'link'):
+                    res = requests.get(rss_feed.feed.link + '/favicon.ico')
+                    if res.status_code == 200:
+                        feed_picture_url = rss_feed.feed.link + '/favicon.ico'
+                        
+                feed.feed_picture_url = feed_picture_url
+            
+                for entry in rss_feed.entries:
+                    print(entry)
+                    try:
+                        post_published_date = parse_date(entry)
+                    except Exception as e:
+                        # TODO: Invalid dates definitely need better handling
+                        continue
+                    
+    
+                    # need some tz conversions here
+                    if not Post.objects.filter(post_url=entry['link'], feed=feed).exists() or (post_published_date and post_published_date > feed.feed_last_publish):
+                        Post.objects.create(
+                            feed = feed,
+                            post_url = entry['link'],
+                            post_name = entry['title'],
+                            post_published_date = post_published_date,
+                            post_description = entry['summary']
+                        )
+                
+                feed.feed_last_publish = feed_last_publish
+                feed.save()
+
+                        
+            except Exception as e:
+                # it's ok if we can't update a feed. 
+                # this should be flagged somewhere in the future so we can do something
+                # but for now it's ok
+                print(e)
+
+            
+        time.sleep(300)  # Sleep for 5 minutes
+        
+        
+        
+        
