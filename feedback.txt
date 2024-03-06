@@ -1,0 +1,59 @@
+# Harry's feedback
+
+## High level
+
+ 1. should not require login to view? We can get some search engine leads
+ leveraging the comments.
+ 1. no comments for anonymous though
+ 1. require identified users? avoid a cesspit of comments. I think we don't want
+ to have to moderate this too much right? Maybe require Google/Apple/etc SSO
+ which might provide at least some authentication.
+ 1. provide some form of community concept, e.g. maybe you have a collection of
+ feeds, like The Bethnal Green Local News collection which people could
+ follow/join. Comments etc. partitioned by this.
+ 1. provide public / private collections or feeds
+ 
+## Technical frontend
+
+My personal preferences:
+
+ 1. get rid of Kea, I see little value to it and a lot of complexity e.g. all
+ the typegen stuff. The abstractions are so... abstract. You can get nicer
+ abstractions with use*, react-query, Context/Providers IMO. Also one fewer tool
+ for people to learn.
+ 1. get rid of axios, I see little value over modern `fetch`, and again adds
+ additional unnecessary abstractions for people to learn.
+ 1. get rid of react-scripts. I haven't used it in a while but remember being
+ very fraustrated by how awkward it is to customise, and how complex the
+ default webpack config is.
+ 1. I've enjoyed the freedom of using tailwindcss for design fwiw. But antd
+ seems fine tbh.
+ 1. If we have something public that we want to appear on Google, that probably
+ has ramifications for serving the frontend? But maybe Google is fine with it
+ now right? I've been playing with remix for house-finder. I guess it has the
+ option of SSR with is good for SEO(?). But I also find the whole
+ client/server/remix/nextjs/etc. underwhelming and confusing. Alternative
+ controversial option: just serve as static html? I do love the responsiveness
+ and tooling around React though :shrug:
+
+## Technical backend
+
+My personal preferences:
+
+ 1. personally I wouldn't bother with djangorestframework. Just use straight
+ django views. The configuration of djangorestframework is so opaque to me I
+ hate them. But yeah, personal gripe. I have a feeling they don't play too well
+ with typing either.
+ 1. separate out requirements.txt and a requirements-lock.txt of something? Keep
+ direct dependencies explicit and avoid snowballing.
+
+Aside from that I was thinking wouldn't it be cool if it was all peer to peer
+somehow. I have no idea how that would work however, and maybe a distraction,
+but also maybe a selling point? Like, it's just a frontend. Hah just me wanting
+to play with peer to peer and see what it's all about.
+
+## Deployment
+
+I'm guessing we don't want to be spending much initially. Like I'm thinking AWS
+free tier or just fly.io or something similar. I hate the user experience of AWS
+though but happy to put in the work.
