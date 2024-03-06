@@ -1,7 +1,6 @@
 frontend/build
 *.sqlite3
 __pycache__/
-.venv/
 
 # Logs
 logs
