@@ -7,13 +7,12 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useActions } from "kea";
-import { newFeedModalLogic } from "./new-feed-modal/newFeedModalLogic";
+import { useNewFeedModal } from "./new-feed-modal/newFeedModalLogic";
 
 const { Sider } = Layout;
 
 const SideNav = () => {
-  const { setIsModalOpen } = useActions(newFeedModalLogic);
+  const { setIsModalOpen } = useNewFeedModal();
   const location = useLocation();
   const navigate = useNavigate();
 

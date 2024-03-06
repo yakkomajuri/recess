@@ -1,13 +1,9 @@
-import { kea, path, afterMount, beforeUnmount, connect, defaults } from "kea";
-
-import { loaders } from "kea-loaders";
 import { api } from "../../lib/api";
 
-import type { exploreLogicType } from "./exploreLogicType";
 import { userLogic } from "../../userLogic";
 import { DEFAULT_NO_DATA, PostData } from "../timeline/timelineLogic";
 
-export const exploreLogic = kea<exploreLogicType>([
+export const exploreLogic = kea([
   path(["src", "components", "timeline", "exploreLogic"]),
   connect({ actions: [userLogic, ["loadUser"]] }),
   defaults(() => ({
@@ -40,6 +36,6 @@ export const exploreLogic = kea<exploreLogicType>([
     actions.loadExplorePosts();
   }),
   beforeUnmount(({ actions }) => {
-    actions.loadUser();
+    // actions.loadUser();
   }),
 ]);

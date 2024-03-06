@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, RefObject } from "react";
 import { Input, Button } from "antd";
 import "./CommentInput.css"; // Import the custom CSS
-import { useActions, useValues } from "kea";
 import { postLogic } from "../post/postLogic";
 import { TextAreaRef } from "antd/es/input/TextArea";
 

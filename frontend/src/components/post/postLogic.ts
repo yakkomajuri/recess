@@ -1,9 +1,6 @@
-import { kea, path, key, props, actions, listeners } from "kea";
-
-import { loaders } from "kea-loaders";
+import { createContext } from "react";
+import { useQuery, useMutation, QueryClient } from "react-query";
 import { api } from "../../lib/api";
-
-import type { postLogicType } from "./postLogicType";
 
 export interface Post {
   post_uuid: string;
@@ -33,68 +30,80 @@ export interface CommentToCreate {
   comment_post_uuid: string;
 }
 
-export const postLogic = kea<postLogicType>([
-  path(["src", "components", "feed", "postLogic"]),
-  props({} as { postUuid?: string }),
-  key((props) => props.postUuid || ""),
-  actions(() => ({
-    likePost: true,
-    unlikePost: true,
-    comment: (comment: CommentToCreate) => ({ comment }),
-  })),
-  loaders(({ props, actions }) => ({
-    post: {
-      loadPost: async (): Promise<Post | null> => {
-        // load post and comments
-        if (!props.postUuid) {
-          return null;
-        }
-        try {
-          const response = await api.get(`/posts/${props.postUuid}`);
-          if (response.status === 200) {
-            actions.loadComments();
-            return response.data;
-          }
-          return null;
-        } catch (error) {
-          return null;
-        }
+const queryClient = new QueryClient();
+
+export function usePost(postUuid: string) {
+  const postQuery = useQuery(["post", postUuid], () => fetchPost(postUuid), {
+    enabled: !!postUuid,
+  });
+  const commentsQuery = useQuery(
+    ["comments", postUuid],
+    () => fetchComments(postUuid),
+    {
+      enabled: !!postUuid,
+    }
+  );
+
+  const likeMutation = useMutation(() => api.post(`/posts/${postUuid}/like`), {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["post", postUuid]);
+    },
+  });
+
+  const unlikeMutation = useMutation(
+    () => api.post(`/posts/${postUuid}/unlike`),
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries(["post", postUuid]);
       },
-    },
-    comments: {
-      loadComments: async (): Promise<PostComment[] | null> => {
-        if (!props.postUuid) {
-          return null;
-        }
-        try {
-          const response = await api.get(
-            `/post_comments?post_uuid=${props.postUuid}`
-          );
-          if (response.status === 200) {
-            return response.data;
-          }
-          return null;
-        } catch (error) {
-          return null;
-        }
+    }
+  );
+
+  const commentMutation = useMutation(
+    (comment: CommentToCreate) => api.post(`/post_comments`, comment),
+    {
+      onSuccess: () => {
+        // Invalidate and refetch comments
+        queryClient.invalidateQueries(["comments", postUuid]);
+        // Optionally invalidate and refetch post as well if needed
+        queryClient.invalidateQueries(["post", postUuid]);
       },
-    },
-  })),
-  listeners(({ actions, props }) => ({
-    likePost: async () => {
-      const response = await api.post(`/posts/${props.postUuid}/like`);
-      // reconsider this?
-      actions.loadPost();
-    },
-    unlikePost: async () => {
-      const response = await api.post(`/posts/${props.postUuid}/unlike`);
-      // reconsider this?
-      actions.loadPost();
-    },
-    comment: async ({ comment }) => {
-      const response = await api.post(`/post_comments`, { ...comment });
-      actions.loadComments();
-      actions.loadPost();
-    },
-  })),
-]);
+    }
+  );
+
+  return {
+    postQuery,
+    commentsQuery,
+    likeMutation,
+    unlikeMutation,
+    commentMutation,
+  };
+}
+
+async function fetchPost(postUuid: string): Promise<Post | null> {
+  try {
+    const response = await api.get(`/posts/${postUuid}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    return null;
+  }
+}
+
+async function fetchComments(postUuid: string): Promise<PostComment[] | null> {
+  try {
+    const response = await api.get(`/post_comments?post_uuid=${postUuid}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return null;
+  }
+}
