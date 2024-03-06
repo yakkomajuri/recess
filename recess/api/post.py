@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from backend.models import Post, PostComment
 from rest_framework.decorators import action
-from blog_media.api.api_utils import get_paginated_queryset
-from blog_media.settings import DEFAULT_PAGE_SIZE
+from recess.api.api_utils import get_paginated_queryset
+from recess.settings import DEFAULT_PAGE_SIZE
 
 
 def _add_user_metadata_to_posts(posts, user):

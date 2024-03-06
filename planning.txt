@@ -2,7 +2,6 @@
 - 
 
 # TODO:
-- Profile
 - Feed auto-reloads
 - Responsive design
 - Feed ownership stuff
@@ -17,6 +16,7 @@
 - Error handling
 - Improve pagination
 - Feed following buttons (extract?)
+- Move to Postgres
 
 
 # Ideas
