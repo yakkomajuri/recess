@@ -25,3 +25,5 @@
 - Play with color palette
 - Suggest feeds to follow if you dont follow any
 - Add analytics
+- Utterances-like widget
+- Import HN comments
