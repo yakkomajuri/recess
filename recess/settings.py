@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -99,16 +100,8 @@ WSGI_APPLICATION = 'recess.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'recess',
-        'USER': os.getenv('DB_USER', 'recess'),
-        'PASSWORD':  os.getenv('DB_PASSWORD', '12345678'),
-        'HOST': os.getenv('DB_HOST', 'localhost'), # Or an IP Address that your DB is hosted on
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL', 'postgres://recess:12345678@localhost/recess'))
 }
-
 
 
 # Password validation

@@ -29,6 +29,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name="app-root"),
     path('admin/', admin.site.urls),
     *router.urls,
-    re_path(r'^', TemplateView.as_view(template_name='index.html'), name="app"),
+    re_path(r'.*', TemplateView.as_view(template_name='index.html'), name="app"),
 ] + staticfiles_urlpatterns()
 
