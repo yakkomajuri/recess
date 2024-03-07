@@ -5,6 +5,8 @@
 - Basic errors to frontend e.g. feed exists
 - Allow accessing timeline without logging in, show some explore equivalent without follow buttons
 - Feed ownership stuff
+- Pagination in other places like feeds following or posts per feed
+
 
 # Known performance issues
 - One request per feed following
@@ -16,7 +18,6 @@
 - Error handling
 - Feed following buttons (extract?)
 - Move to Postgres
-
 
 # Ideas
 - Consolidate Timeline and Explore?
