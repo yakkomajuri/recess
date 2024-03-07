@@ -32,6 +32,8 @@ COPY . /code
 # Copy the built React app from the first stage
 COPY --from=react-build /app/build /code/frontend/build
 
+RUN python manage.py collectstatic --noinput
+
 EXPOSE 8000
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "recess.wsgi:application"]

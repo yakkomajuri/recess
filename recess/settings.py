@@ -28,8 +28,6 @@ SECRET_KEY = 'django-insecure-^dd*jyje2dc7!f-^1=gk(mo5eux*1_113ff*ds5io14(u^sp#w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -142,6 +140,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'recess/staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -154,3 +153,5 @@ DEFAULT_PAGE_SIZE = 100
 
 USE_TZ = True
 TIME_ZONE = 'UTC'
+
+CSRF_TRUSTED_ORIGINS = ['https://recess.fly.dev']
