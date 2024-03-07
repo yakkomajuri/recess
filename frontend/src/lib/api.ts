@@ -19,7 +19,7 @@ export function getCookie(name: string): string | null {
     return cookieValue
 }
 
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = 'http://localhost:8000/api'
 
 export const api = {
     get: (path: string, config: ApiConfig = {}) =>

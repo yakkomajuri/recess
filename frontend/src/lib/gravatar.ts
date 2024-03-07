@@ -5,12 +5,13 @@ export enum GravatarDefaultType {
     MysteryPerson = 'mp',
 }
 
-export function getGravatarUrl(email: string, defaultSubstitute = GravatarDefaultType.MysteryPerson, size = 64) {
+export function getGravatarUrl(str: string, defaultSubstitute = GravatarDefaultType.MysteryPerson, size = 64) {
+    console.log(str)
     // Normalize the email address
-    const normalizedEmail = email.trim().toLowerCase()
+    const normalizedStr = str.trim().toLowerCase()
 
     // Generate the MD5 hash of the normalized email
-    const hash = md5(normalizedEmail)
+    const hash = md5(normalizedStr)
 
     // Construct the Gravatar URL with the desired size (default 64px)
     const gravatarUrl = `https://www.gravatar.com/avatar/${hash}?s=${size}&d=${defaultSubstitute}`

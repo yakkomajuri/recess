@@ -77,7 +77,7 @@ ROOT_URLCONF = 'recess.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(os.path.normpath(os.path.dirname(__file__)), 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,6 +89,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ALLOWED_HOSTS = ['*']
 
 WSGI_APPLICATION = 'recess.wsgi.application'
 

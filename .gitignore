@@ -3,6 +3,7 @@ frontend/build
 __pycache__/
 .venv/
 .DS_Store
+recess/static
 
 # Logs
 logs
