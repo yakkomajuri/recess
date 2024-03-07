@@ -1,10 +1,10 @@
-import React from "react";
-import { List, Avatar } from "antd";
-import "./Trending.css"; // Import custom CSS for styling
-import { useValues } from "kea";
-import { trendingLogic } from "./trendingLogic";
-import { GravatarDefaultType, getGravatarUrl } from "../../lib/gravatar";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import { List, Avatar } from 'antd'
+import './Trending.css' // Import custom CSS for styling
+import { useValues } from 'kea'
+import { trendingLogic } from './trendingLogic'
+import { GravatarDefaultType, getGravatarUrl } from '../../lib/gravatar'
+import { useNavigate } from 'react-router-dom'
 
 // Example data for trending posts
 // const trendingPosts = [
@@ -14,40 +14,34 @@ import { useNavigate } from "react-router-dom";
 // ]
 
 const Trending: React.FC = () => {
-  const { trendingFeeds } = useValues(trendingLogic);
-  const navigate = useNavigate();
+    const { trendingFeeds } = useValues(trendingLogic)
+    const navigate = useNavigate()
 
-  return (
-    <div className="trending-section">
-      <h3>Trending 🔥</h3>
-      {/* handle "no data" here */}
-      <List
-        header={<div>Feeds</div>}
-        dataSource={trendingFeeds}
-        renderItem={(feed) => (
-          <List.Item
-            onClick={() => navigate(`/feed/${feed.feed_uuid}`)}
-            className="trending-feeds-li"
-          >
-            <List.Item.Meta
-              avatar={
-                <Avatar
-                  src={
-                    feed.feed_picture_url ||
-                    getGravatarUrl(
-                      feed.feed_uuid,
-                      GravatarDefaultType.Identicon
-                    )
-                  }
-                />
-              }
-              title={feed.feed_name}
-              description={`${feed.feed_follower_count} following`}
+    return (
+        <div className="trending-section">
+            <h3>Trending 🔥</h3>
+            {/* handle "no data" here */}
+            <List
+                header={<div>Feeds</div>}
+                dataSource={trendingFeeds}
+                renderItem={(feed) => (
+                    <List.Item onClick={() => navigate(`/feed/${feed.feed_uuid}`)} className="trending-feeds-li">
+                        <List.Item.Meta
+                            avatar={
+                                <Avatar
+                                    src={
+                                        feed.feed_picture_url ||
+                                        getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Identicon)
+                                    }
+                                />
+                            }
+                            title={feed.feed_name}
+                            description={`${feed.feed_follower_count} following`}
+                        />
+                    </List.Item>
+                )}
             />
-          </List.Item>
-        )}
-      />
-      {/* <List
+            {/* <List
         header={<div>Posts</div>}
         dataSource={trendingPosts}
         renderItem={item => (
@@ -60,8 +54,8 @@ const Trending: React.FC = () => {
           </List.Item>
         )}
       /> */}
-    </div>
-  );
-};
+        </div>
+    )
+}
 
-export { Trending };
+export { Trending }

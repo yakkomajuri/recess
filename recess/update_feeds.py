@@ -10,7 +10,7 @@ from recess.feed_utils import parse_date, tz_aware_datetime
 def update_feeds():
     while True:
         # Sleep first to avoid running this on startup. 300s = 5min
-        time.sleep(300)  
+        time.sleep(300)
         
         print('Updating feeds...')
         for feed in Feed.objects.all():

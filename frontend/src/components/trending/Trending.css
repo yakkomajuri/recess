@@ -1,9 +1,9 @@
 .trending-section {
-  margin-left: 40px;
-  margin-top: 60px;
-  width: 200px;
+    margin-left: 40px;
+    margin-top: 60px;
+    width: 200px;
 }
 
 .trending-section .ant-list-header {
-  font-weight: bold;
+    font-weight: bold;
 }
