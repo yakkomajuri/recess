@@ -2,10 +2,9 @@
 - 
 
 # TODO:
-- Feed auto-reloads
-- Responsive design
-- Feed ownership stuff
 - Basic errors to frontend e.g. feed exists
+- Allow accessing timeline without logging in, show some explore equivalent without follow buttons
+- Feed ownership stuff
 
 # Known performance issues
 - One request per feed following
@@ -13,18 +12,16 @@
 # Important refactors needed
 - Sort out user!
 - Clean up useState and useEffect
-- Standardize pagination
+- Standardize and improve pagination
 - Error handling
-- Improve pagination
 - Feed following buttons (extract?)
 - Move to Postgres
 
 
 # Ideas
 - Consolidate Timeline and Explore?
-- Allow accessing timeline without logging in, show some explore equivalent without follow buttons
 - Play with color palette
-- Suggest feeds to follow if you dont follow any
 - Add analytics
 - Utterances-like widget
 - Import HN comments
+- Suggest feeds to follow if you dont follow any (trending sort of does this?)

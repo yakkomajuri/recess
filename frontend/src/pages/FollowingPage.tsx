@@ -14,6 +14,7 @@ import { Post } from "../components/post/postLogic";
 import { BackToTimeline } from "../components/BackToTimeline";
 import { userLogic } from "../userLogic";
 import { Trending } from "../components/trending/Trending";
+import { BottomNav } from "../components/bottom-nav/BottomNav";
 
 const { Content } = Layout;
 
@@ -27,10 +28,10 @@ const FollowingPage = () => {
         <Layout>
           <Content style={{ padding: "0 24px", minHeight: 280 }}>
             <Row>
-              <Col span={6}>
+            <Col span={6} xs={0} sm={6}>
                 <SideNav />
               </Col>
-              <Col span={12}>
+              <Col span={12} xs={24} sm={12}>
                 {user!.feeds_following.length > 0 ? (
                   user!.feeds_following.map((feed_uuid: string) => (
                     <Row style={{ width: "100%", marginBottom: 10 }}>
@@ -55,11 +56,12 @@ const FollowingPage = () => {
                   </Row>
                 )}
               </Col>
-              <Col span={6}>
+              <Col span={6} xs={0} sm={6}>
                 <Trending />
               </Col>
             </Row>
           </Content>
+          <BottomNav />
         </Layout>
       </Layout>
       <NewFeedModal />

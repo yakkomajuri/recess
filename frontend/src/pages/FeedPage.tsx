@@ -10,6 +10,7 @@ import { feedLogic } from "../components/feed/feedLogic";
 import { useValues } from "kea";
 import { PostCard } from "../components/post/PostCard";
 import { Post } from "../components/post/postLogic";
+import { BottomNav } from "../components/bottom-nav/BottomNav";
 
 const { Content } = Layout;
 
@@ -51,6 +52,7 @@ const FeedPage = () => {
               </Col>
             </Row>
           </Content>
+          <BottomNav   />
         </Layout>
       </Layout>
       <NewFeedModal />
