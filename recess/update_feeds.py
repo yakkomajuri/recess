@@ -39,13 +39,12 @@ def update_feeds():
                 feed.feed_picture_url = feed_picture_url
             
                 for entry in rss_feed.entries:
-                    print(entry)
-                    try:
-                        post_published_date = parse_date(entry)
-                    except Exception as e:
-                        print(e)
-                        continue
+                    post_published_date = parse_date(entry)
                     
+                    # we're currently skipping posts we can't get a date for
+                    # is this the best approach?
+                    if post_published_date is None:
+                        continue
                         
                     # unsure what this conditional should really be at this stage
                     # should we cover posts added in the past? should we update old posts?

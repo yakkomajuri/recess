@@ -22,7 +22,7 @@ def parse_date(entry):
     try:
         return tz_aware_datetime(datetime.fromisoformat(entry['published'] or entry['pubDate']))
     except Exception as e:
-        print(e)
-        pass
+        print('Could not parse date', entry, e)
+        return None
     
 

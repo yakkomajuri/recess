@@ -41,13 +41,17 @@ class FeedSerializer(serializers.ModelSerializer):
             "feed_picture_url": feed_picture_url,
             "feed_last_publish": feed_last_publish,
         }
+        
         res = super().create(feed_data)
+        
         for entry in rss_feed.entries:
-            try:
-                post_published_date = parse_date(entry)
-            except Exception as e:
-                print(e)
-                # return response.Response(status=417, data={ "detail": "Invalid date on posts"})
+            post_published_date = parse_date(entry)
+            
+            # we're currently skipping posts we can't get a date for
+            # is this the best approach?
+            if post_published_date is None:
+                continue
+  
             Post.objects.create(
                 feed = Feed.objects.get(feed_uuid=feed_uuid),
                 post_url = entry['link'],
@@ -56,6 +60,7 @@ class FeedSerializer(serializers.ModelSerializer):
                 post_description = entry['summary']
             ) 
         return res
+    
     
 
 class FeedViewset(viewsets.ModelViewSet):
