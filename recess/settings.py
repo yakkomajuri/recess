@@ -102,8 +102,8 @@ DATABASES = {
         'NAME': 'recess',
         'USER': os.getenv('DB_USER', 'recess'),
         'PASSWORD':  os.getenv('DB_PASSWORD', '12345678'),
-        'HOST': 'localhost', # Or an IP Address that your DB is hosted on
-        'PORT': '5432',
+        'HOST': os.getenv('DB_HOST', 'localhost'), # Or an IP Address that your DB is hosted on
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
