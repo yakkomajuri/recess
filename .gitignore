@@ -2,6 +2,7 @@ frontend/build
 *.sqlite3
 __pycache__/
 .venv/
+.DS_Store
 
 # Logs
 logs
