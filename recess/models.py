@@ -2,6 +2,7 @@ from django.db import models
 from uuid import uuid4
 import datetime
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 class User(AbstractUser):
     feeds_following = models.ManyToManyField('Feed', related_name='feeds_following', blank=True)
@@ -24,7 +25,7 @@ class Feed(models.Model):
     feed_last_updated = models.DateTimeField(default=datetime.datetime.now) 
     
     # this is when the feed was last published according to its metadata
-    feed_last_publish = models.DateTimeField(default=datetime.datetime.now)
+    feed_last_publish = models.DateTimeField(default=timezone.now)
     
     feed_picture_url = models.URLField(null=True, blank=True)
     feed_description = models.CharField(max_length=1000)

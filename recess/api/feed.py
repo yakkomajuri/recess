@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 import requests
 from email.utils import parsedate_to_datetime
-from recess.feed_utils import parse_date
+from recess.feed_utils import parse_date, tz_aware_datetime
     
 
 class FeedSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class FeedSerializer(serializers.ModelSerializer):
         feed_name = rss_feed.feed.title # this needs error handling
         feed_description = rss_feed.feed.description # this needs error handling
         feed_picture_url = ''
-        feed_last_publish = parsedate_to_datetime(rss_feed.feed.updated) if rss_feed.feed.updated is not None else None
+        feed_last_publish = tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated)) if rss_feed.feed.updated is not None else None
         
         if hasattr(rss_feed.feed, 'image') and hasattr(rss_feed.feed.image, 'href'):
             feed_picture_url = rss_feed.feed.image.href 

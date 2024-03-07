@@ -57,7 +57,8 @@ html {
 
 .explore-page,
 .following-page,
-.timeline-page {
+.timeline-page,
+.post-page {
   .ant-card-meta-title:hover {
     color: rgb(96, 96, 97);
     cursor: pointer;

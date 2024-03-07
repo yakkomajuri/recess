@@ -150,3 +150,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Default page size on paginated endpoints
 DEFAULT_PAGE_SIZE = 100
+
+USE_TZ = True
+TIME_ZONE = 'UTC'

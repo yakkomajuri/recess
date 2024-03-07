@@ -3,18 +3,21 @@ from recess.models import Feed, Post
 import feedparser
 import requests
 from email.utils import parsedate_to_datetime
-from recess.feed_utils import parse_date
+from recess.feed_utils import parse_date, tz_aware_datetime
 
 
 
 def update_feeds():
     while True:
-        print('running!')
+        # Sleep first to avoid running this on startup. 300s = 5min
+        time.sleep(300)  
+        
+        print('Updating feeds...')
         for feed in Feed.objects.all():
+            print(f'Updating feed {feed.feed_name} ({feed.feed_uuid})')
             try:
-                print(feed)
                 rss_feed = feedparser.parse(feed.feed_url)
-                feed_last_publish = parsedate_to_datetime(rss_feed.feed.updated) if rss_feed.feed.updated is not None else None
+                feed_last_publish = tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated)) if rss_feed.feed.updated is not None else None
                 
                 
                 # if the feed declares when it was published and that hasn't changed since we last imported it, no need to update
@@ -40,12 +43,16 @@ def update_feeds():
                     try:
                         post_published_date = parse_date(entry)
                     except Exception as e:
-                        # TODO: Invalid dates definitely need better handling
+                        print(e)
                         continue
                     
-    
-                    # need some tz conversions here
-                    if not Post.objects.filter(post_url=entry['link'], feed=feed).exists() or (post_published_date and post_published_date > feed.feed_last_publish):
+                        
+                    # unsure what this conditional should really be at this stage
+                    # should we cover posts added in the past? should we update old posts?
+                    # currently by checking that the link exists we're actually guarding against the
+                    # feed being wrong and not updating their lastBuildDate - unsure we should
+                    if (post_published_date and post_published_date > feed.feed_last_publish) and (not Post.objects.filter(post_url=entry['link'], feed=feed).exists()):
+                        print(f"New post {entry['title']}")
                         Post.objects.create(
                             feed = feed,
                             post_url = entry['link'],
@@ -65,7 +72,6 @@ def update_feeds():
                 print(e)
 
             
-        time.sleep(300)  # Sleep for 5 minutes
         
         
         
