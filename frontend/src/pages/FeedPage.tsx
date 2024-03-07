@@ -52,7 +52,7 @@ const FeedPage = () => {
               </Col>
             </Row>
           </Content>
-          <BottomNav   />
+          <BottomNav />
         </Layout>
       </Layout>
       <NewFeedModal />

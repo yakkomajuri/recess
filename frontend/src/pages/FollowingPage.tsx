@@ -28,7 +28,7 @@ const FollowingPage = () => {
         <Layout>
           <Content style={{ padding: "0 24px", minHeight: 280 }}>
             <Row>
-            <Col span={6} xs={0} sm={6}>
+              <Col span={6} xs={0} sm={6}>
                 <SideNav />
               </Col>
               <Col span={12} xs={24} sm={12}>

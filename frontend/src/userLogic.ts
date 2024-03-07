@@ -35,8 +35,8 @@ export const userLogic = kea<userLogicType>([
     },
   })),
   reducers(() => ({
-    // the idea of localUser is to enable following feeds on explore 
-    // for example without having the explore page refresh 
+    // the idea of localUser is to enable following feeds on explore
+    // for example without having the explore page refresh
     localUser: [
       null as User | null,
       {

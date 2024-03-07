@@ -43,20 +43,20 @@ const PostCardTitle = ({
     e.stopPropagation();
     await api.post("/user/follow_feed", { feed_uuid: feedUuid });
     if (!isExplorePage) {
-      loadPosts()
-      loadUser()
+      loadPosts();
+      loadUser();
     }
     const newLocalUser = {
       ...localUser,
       feeds_following: [...(localUser || user!).feeds_following, feedUuid],
     };
     setLocalUser(newLocalUser as User);
-  }
+  };
 
   const handleTitleClick = (e: Event) => {
-    e.stopPropagation()
-    navigate(`/feed/${feedUuid}`)
-  }
+    e.stopPropagation();
+    navigate(`/feed/${feedUuid}`);
+  };
 
   return (
     <Row

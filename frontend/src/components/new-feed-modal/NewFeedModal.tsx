@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { Form, Input, Button, notification, Modal } from "antd";
 import { api } from "../../lib/api";
 import { useActions, useValues } from "kea";
@@ -8,44 +8,46 @@ import { useNavigate } from "react-router-dom";
 
 const NewFeedModal = () => {
   // const { loadPosts } = useActions(timelineLogic);
-  const { isModalOpen } = useValues(newFeedModalLogic)
-  const { setIsModalOpen } = useActions(newFeedModalLogic)
-  const navigate = useNavigate()
+  const { isModalOpen } = useValues(newFeedModalLogic);
+  const { setIsModalOpen } = useActions(newFeedModalLogic);
+  const navigate = useNavigate();
 
   const handleSubmit = async ({
     feedName,
     feedUrl,
   }: {
-    feedName?: string
-    feedUrl?: string
+    feedName?: string;
+    feedUrl?: string;
   }) => {
     try {
       const response = await api.post("/feed", {
         feed_url: feedUrl,
-      })
+      });
       notification.success({
         message: "Submit Success",
         description: "Feed imported successfully.",
-      })
-      setIsModalOpen(false)
-      navigate(`/feed/${response.data.feed_uuid}`)
+      });
+      setIsModalOpen(false);
+      navigate(`/feed/${response.data.feed_uuid}`);
       // loadPosts()
     } catch (error: any) {
       if (error.response?.data) {
-        const errors = Object.values(error.response.data)
+        const errors = Object.values(error.response.data);
         notification.error({
           message: "Importing feed failed",
-          description: Array.isArray(errors[0]) ? errors[0][0] : 'Failed to import the feed. Please try again.',
-        })
-        return    
+          description: Array.isArray(errors[0])
+            ? errors[0][0]
+            : "Failed to import the feed. Please try again.",
+        });
+        return;
       }
 
       notification.error({
         message: "Importing feed failed",
         description: "Failed to import the feed. Please try again.",
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -77,7 +79,7 @@ const NewFeedModal = () => {
         </Form>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export { NewFeedModal }
+export { NewFeedModal };
