@@ -30,10 +30,18 @@ const NewFeedModal = () => {
       setIsModalOpen(false)
       navigate(`/feed/${response.data.feed_uuid}`)
       // loadPosts()
-    } catch (error) {
-      console.error("API Error:", error)
+    } catch (error: any) {
+      if (error.response?.data) {
+        const errors = Object.values(error.response.data)
+        notification.error({
+          message: "Importing feed failed",
+          description: Array.isArray(errors[0]) ? errors[0][0] : 'Failed to import the feed. Please try again.',
+        })
+        return    
+      }
+
       notification.error({
-        message: "Submit Failed",
+        message: "Importing feed failed",
         description: "Failed to import the feed. Please try again.",
       })
     }
