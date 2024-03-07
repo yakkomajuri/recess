@@ -3,13 +3,11 @@ import { Button, Col, Row, Skeleton, Spin } from "antd";
 import { PostCard } from "../post/PostCard";
 import { useActions, useValues } from "kea";
 import { timelineLogic } from "./timelineLogic";
-import { Post } from "../post/postLogic";
 
 const Timeline = () => {
   const { posts, postsLoading } = useValues(timelineLogic);
   const { loadPosts } = useActions(timelineLogic);
 
-  console.log(posts);
   return (
     <Row style={{ width: "100%" }}>
       <Col>
