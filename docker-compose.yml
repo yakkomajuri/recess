@@ -4,7 +4,14 @@ version: '3'
 
 services:
   postgres:
-    image: postgres:16
+    # Image version aligned with version used by postgres-flex, see
+    # https://github.com/fly-apps/postgres-flex/blob/master/Dockerfile
+    #
+    # postgres-flex looks like the most active fly postgres app and is
+    # referenced from the official docs from
+    # https://fly.io/docs/postgres/managing/upgrades/ although it's not
+    # clear if that's the official fly postgres app.
+    image: postgres:15.6
     environment:
       POSTGRES_USER: recess
       POSTGRES_PASSWORD: '12345678'
