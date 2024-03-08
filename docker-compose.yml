@@ -1,0 +1,13 @@
+# docker compose to provide supporting services in development
+
+version: '3'
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: recess
+      POSTGRES_PASSWORD: '12345678'
+      POSTGRES_DB: recess
+    ports:
+      - "5432:5432"
