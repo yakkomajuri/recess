@@ -15,12 +15,28 @@ const FeedCardTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; fe
     const navigate = useNavigate()
 
     const unfollowFeed = async (e: Event, feedUuid: string) => {
-        await api.post('/user/unfollow_feed', { feed_uuid: feedUuid })
+        try {
+            await api.post('/user/unfollow_feed', { feed_uuid: feedUuid })
+        } catch (error) {
+            // If the user is not authenticated, redirect to login page
+            if ((error as any).response.status === 401) {
+                window.location.href = '/login'
+            }
+        }
+
         loadUser()
     }
 
     const followFeed = async (e: Event, feedUuid: string) => {
-        await api.post('/user/follow_feed', { feed_uuid: feedUuid })
+        try {
+            await api.post('/user/follow_feed', { feed_uuid: feedUuid })
+        } catch (error) {
+            // If the user is not authenticated, redirect to login page
+            if ((error as any).response.status === 401) {
+                window.location.href = '/login'
+            }
+        }
+
         loadUser()
     }
     return (

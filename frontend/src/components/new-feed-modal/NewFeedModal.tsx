@@ -25,6 +25,11 @@ const NewFeedModal = () => {
             navigate(`/feed/${response.data.feed_uuid}`)
             // loadPosts()
         } catch (error: any) {
+            // If the user is not authenticated, redirect to login page
+            if ((error as any).response.status === 401) {
+                window.location.href = '/login'
+            }
+
             if (error.response?.data) {
                 const errors = Object.values(error.response.data)
                 notification.error({

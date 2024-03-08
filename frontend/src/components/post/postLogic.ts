@@ -80,17 +80,38 @@ export const postLogic = kea<postLogicType>([
     })),
     listeners(({ actions, props }) => ({
         likePost: async () => {
-            const response = await api.post(`/posts/${props.postUuid}/like`)
+            try {
+                await api.post(`/posts/${props.postUuid}/like`)
+            } catch (error) {
+                // If the user is not authenticated, redirect to login page
+                if ((error as any).response.status === 401) {
+                    window.location.href = '/login'
+                }
+            }
             // reconsider this?
             actions.loadPost()
         },
         unlikePost: async () => {
-            const response = await api.post(`/posts/${props.postUuid}/unlike`)
+            try {
+                await api.post(`/posts/${props.postUuid}/unlike`)
+            } catch (error) {
+                // If the user is not authenticated, redirect to login page
+                if ((error as any).response.status === 401) {
+                    window.location.href = '/login'
+                }
+            }
             // reconsider this?
             actions.loadPost()
         },
         comment: async ({ comment }) => {
-            const response = await api.post(`/post_comments`, { ...comment })
+            try {
+                await api.post(`/post_comments`, { ...comment })
+            } catch (error) {
+                // If the user is not authenticated, redirect to login page
+                if ((error as any).response.status === 401) {
+                    window.location.href = '/login'
+                }
+            }
             actions.loadComments()
             actions.loadPost()
         },
