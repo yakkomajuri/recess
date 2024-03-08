@@ -1,9 +1,9 @@
 import React from 'react'
 import { Layout, Tooltip, notification } from 'antd'
-import { LogoutOutlined } from '@ant-design/icons'
+import { LogoutOutlined, LoginOutlined } from '@ant-design/icons'
 import { api } from '../../lib/api'
 import { useNavigate } from 'react-router-dom'
-import { useActions } from 'kea'
+import { useActions, useValues } from 'kea'
 import { userLogic } from '../../userLogic'
 
 const { Header } = Layout
@@ -11,6 +11,7 @@ const { Header } = Layout
 const TimelineHeader = () => {
     const navigate = useNavigate()
     const { setUser } = useActions(userLogic)
+    const { user } = useValues(userLogic)
 
     const handleLogout = async (values: any) => {
         try {
@@ -42,13 +43,23 @@ const TimelineHeader = () => {
             <div className="platform-name" onClick={() => navigate('/timeline')} style={{ cursor: 'pointer' }}>
                 recess
             </div>
-            <Tooltip title="Logout">
-                <LogoutOutlined
-                    rotate={180}
-                    onClick={handleLogout}
-                    style={{ fontSize: 20, color: 'rgb(138 169 193)', cursor: 'pointer' }}
-                />
-            </Tooltip>
+            {user ? (
+                <Tooltip title="Logout">
+                    <LogoutOutlined
+                        rotate={180}
+                        onClick={handleLogout}
+                        style={{ fontSize: 20, color: 'rgb(138 169 193)', cursor: 'pointer' }}
+                    />
+                </Tooltip>
+            ) : (
+                <Tooltip title="Login">
+                    <LoginOutlined
+                        rotate={180}
+                        onClick={() => navigate('/login')}
+                        style={{ fontSize: 20, color: 'rgb(138 169 193)', cursor: 'pointer' }}
+                    />
+                </Tooltip>
+            )}
         </Header>
     )
 }

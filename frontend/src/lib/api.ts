@@ -23,16 +23,22 @@ const HOST = process.env.NODE_ENV === 'production' ? 'https://recess.fly.dev' : 
 const BASE_URL = `${HOST}/api`
 
 export const api = {
-    get: (path: string, config: ApiConfig = {}) =>
-        axios({
+    get: (path: string, config: ApiConfig = {}) => {
+        // To ensure that restframework doesn't return 401 for unauthenticated
+        // users, we conditionally send Token header only if the user is
+        // authenticated and the token is available. There is something a little
+        // suboptimal about this, but good enough for now(?)
+        const csrftoken = getCookie('csrftoken')
+        return axios({
             method: 'get',
             url: `${BASE_URL}${path}`,
             headers: {
-                ...(config.disableTokenAuth ? {} : { Authorization: `Token ${getCookie('csrftoken')}` }),
+                ...(config.disableTokenAuth || !csrftoken ? {} : { Authorization: `Token ${csrftoken}` }),
                 ...config.headers,
             },
             ...config,
-        }),
+        })
+    },
     post: (path: string, data: Record<string, any> = {}, config: ApiConfig = {}) =>
         axios({
             data,

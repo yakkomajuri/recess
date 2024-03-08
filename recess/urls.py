@@ -1,8 +1,7 @@
-
 from django.contrib import admin
 from django.urls import path, re_path
 from .api.feed import FeedViewset
-from .api.post import PostViewset, PostCommentViewset
+from .api.post import ExploreView, PostViewset, PostCommentViewset
 from .api.user import UserViewSet
 from rest_framework_extensions.routers import ExtendedDefaultRouter
 from django.views.generic import TemplateView
@@ -20,17 +19,17 @@ class Router(ExtendedDefaultRouter):
 router = Router()
 router.register(r"api/feed", FeedViewset, basename="feed")
 router.register(r"api/posts", PostViewset, basename="posts")
-router.register(r'api/user', UserViewSet, basename='user')
-router.register(r'api/post_comments', PostCommentViewset, basename='post_comments')
-
+router.register(r"api/user", UserViewSet, basename="user")
+router.register(r"api/post_comments", PostCommentViewset, basename="post_comments")
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html'), name="app-root"),
-    path('admin/', admin.site.urls),
-    *router.urls
+    path("", TemplateView.as_view(template_name="index.html"), name="app-root"),
+    path("admin/", admin.site.urls),
+    path(r"api/posts/explore", ExploreView.as_view(), name="explore"),
+    *router.urls,
 ] + staticfiles_urlpatterns()
 
-urlpatterns += [re_path(r'.*', TemplateView.as_view(template_name='index.html'), name="app")]
-
-
+urlpatterns += [
+    re_path(r".*", TemplateView.as_view(template_name="index.html"), name="app")
+]
