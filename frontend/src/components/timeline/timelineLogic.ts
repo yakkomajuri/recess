@@ -58,7 +58,7 @@ export const timelineLogic = kea<timelineLogicType>([
         actions.loadPosts()
 
         // do gradual loading of posts
-        setTimeout(actions.loadPosts, 1000)
-        setTimeout(actions.loadPosts, 1500)
+        // setTimeout(actions.loadPosts, 1000)
+        // setTimeout(actions.loadPosts, 1500)
     }),
 ])

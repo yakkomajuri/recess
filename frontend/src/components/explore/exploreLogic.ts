@@ -49,8 +49,8 @@ export const exploreLogic = kea<exploreLogicType>([
         actions.loadExplorePostMetadata()
 
         // do gradual loading of posts
-        setTimeout(actions.loadExplorePostMetadata, 1000)
-        setTimeout(actions.loadExplorePostMetadata, 1500)
+        // setTimeout(actions.loadExplorePostMetadata, 1000)
+        // setTimeout(actions.loadExplorePostMetadata, 1500)
     }),
     beforeUnmount(({ actions }) => {
         actions.loadUser()
