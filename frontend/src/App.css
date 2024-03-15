@@ -117,3 +117,8 @@ html {
         display: none;
     }
 }
+
+.disabled {
+    cursor: default;
+    color: gray;
+}
