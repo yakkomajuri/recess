@@ -1,0 +1,15 @@
+.feed-search {
+    width: 80%;
+    margin-left: 40px;
+    margin-top: 10px;
+
+    .ant-input,
+    .ant-btn {
+        background: #efeeee;
+    }
+
+    .ant-btn:hover {
+        background: #4c87da !important;
+        color: white !important;
+    }
+}

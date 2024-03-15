@@ -1,0 +1,42 @@
+.comment-container {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px;
+    margin-bottom: 16px; /* Space between comments */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid #eaeaea; /* Light border for definition */
+}
+
+.comment-avatar img {
+    width: 40px; /* Adjust as needed */
+    height: 40px;
+    border-radius: 50%; /* Circular avatar */
+    margin-right: 16px; /* Adjust spacing between avatar and content */
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.comment-author {
+    font-weight: 600; /* Slightly bolder */
+    color: #333; /* Dark text for contrast */
+}
+
+.comment-date {
+    color: #999; /* Subdued color for the date */
+    font-size: 0.8rem; /* Smaller font size for date */
+}
+
+.comment-content {
+    color: #555; /* Darker color for readability */
+    font-size: 0.9rem; /* Adjust font size for content readability */
+}

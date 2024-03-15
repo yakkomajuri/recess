@@ -1,0 +1,26 @@
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff; /* Adjust the background color as needed */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* subtle shadow for a "lifted" effect */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px 0; /* Adjust padding as needed */
+    z-index: 1000; /* Ensure the nav is above other content */
+    font-size: 24px; /* Adjust icon size as needed */
+    color: #203332; /* Adjust icon color as needed */
+}
+
+.icon-holder {
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* 576px is the cutoff point between Antd's xs and sm */
+@media (min-width: 576px) {
+    .bottom-nav {
+        display: none;
+    }
+}
