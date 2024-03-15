@@ -110,7 +110,6 @@ html {
     letter-spacing: 1px;
 }
 
-
 /* 576px is the cutoff point between Antd's xs and sm */
 @media (min-width: 576px) {
     .mobile-feed-search {

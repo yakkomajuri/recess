@@ -22,7 +22,10 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={!!user ? <Navigate to="/timeline" replace /> : <Navigate to="/explore" replace />} />
+                <Route
+                    path="/"
+                    element={!!user ? <Navigate to="/timeline" replace /> : <Navigate to="/explore" replace />}
+                />
                 <Route path="/login" element={!!user ? <Navigate to="/timeline" replace /> : <LoginPage />} />
                 <Route path="/timeline" element={!!user ? <TimelinePage /> : <Navigate to="/login" replace />} />
                 <Route path="/feeds" element={!!user ? <FollowingPage /> : <Navigate to="/login" replace />} />

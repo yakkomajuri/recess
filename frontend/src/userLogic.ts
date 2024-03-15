@@ -8,7 +8,7 @@ import { notification } from 'antd'
 export enum EmailVerificationStatus {
     NotVerified = 0,
     VerifyEmailSent = 1,
-    Verified = 2
+    Verified = 2,
 }
 
 export interface User {
@@ -25,7 +25,7 @@ export const userLogic = kea<userLogicType>([
     actions(() => ({
         setLocalUser: (user: User) => ({ user }),
         setUser: (user: User | null) => ({ user }),
-        verifyEmail: true
+        verifyEmail: true,
     })),
     loaders(({ actions }) => ({
         user: {
@@ -64,10 +64,10 @@ export const userLogic = kea<userLogicType>([
         verifyEmail: async () => {
             try {
                 await api.post(`/user/send_verification_email`)
-                notification.success({ message: 'Verification email sent!'})
+                notification.success({ message: 'Verification email sent!' })
                 actions.loadUser()
             } catch (error) {
-                notification.error({ message: 'Unable to send verification email'})
+                notification.error({ message: 'Unable to send verification email' })
             }
         },
     })),

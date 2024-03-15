@@ -56,14 +56,20 @@ const Profile = () => {
             </div>
             <div className="profile-content">
                 <Divider />
-                {user.email_verification_status === EmailVerificationStatus.Verified ?
-                    <p>Email <i>{user.email}</i> is verified.</p> : user.email_verification_status === EmailVerificationStatus.VerifyEmailSent ?
-                        <p>Email sent to <i>{user.email}</i>.</p> :
-                        <a onClick={verifyEmail}>Verify your email <i>{user.email}</i></a>
-                }
+                {user.email_verification_status === EmailVerificationStatus.Verified ? (
+                    <p>
+                        Email <i>{user.email}</i> is verified.
+                    </p>
+                ) : user.email_verification_status === EmailVerificationStatus.VerifyEmailSent ? (
+                    <p>
+                        Email sent to <i>{user.email}</i>.
+                    </p>
+                ) : (
+                    <a onClick={verifyEmail}>
+                        Verify your email <i>{user.email}</i>
+                    </a>
+                )}
                 <Divider />
-
-
 
                 <Form onFinish={handleBioSubmit}>
                     <Form.Item name="bio" initialValue={bio} style={{ marginBottom: 5 }}>

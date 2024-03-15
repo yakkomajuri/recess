@@ -18,9 +18,13 @@ const SignupForm = () => {
 
     const onFinish = async ({ username, email, password }: SignupFormValues) => {
         try {
-            const response = await api.post('/user', { username, email, password }, {
-                disableTokenAuth: true,
-            })
+            const response = await api.post(
+                '/user',
+                { username, email, password },
+                {
+                    disableTokenAuth: true,
+                }
+            )
             document.cookie = `authtoken=${response.data.token}`
             loadUser()
             navigate('/timeline')
@@ -50,31 +54,31 @@ const SignupForm = () => {
                 name="password"
                 rules={[
                     { required: true, message: 'Please input your password!' },
-                    { min: 8, message: 'Password must be at least 8 characters long!' }
+                    { min: 8, message: 'Password must be at least 8 characters long!' },
                 ]}
             >
                 <Input.Password />
             </Form.Item>
 
             <Form.Item
-                    name="confirmPassword"
-                    label="Confirm password"
-                    dependencies={['password']}
-                    hasFeedback
-                    rules={[
-                        { required: true, message: 'Please confirm your new password!' },
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve()
-                                }
-                                return Promise.reject(new Error('The two passwords that you entered do not match!'))
-                            },
-                        }),
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
+                name="confirmPassword"
+                label="Confirm password"
+                dependencies={['password']}
+                hasFeedback
+                rules={[
+                    { required: true, message: 'Please confirm your new password!' },
+                    ({ getFieldValue }) => ({
+                        validator(_, value) {
+                            if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve()
+                            }
+                            return Promise.reject(new Error('The two passwords that you entered do not match!'))
+                        },
+                    }),
+                ]}
+            >
+                <Input.Password />
+            </Form.Item>
             <Form.Item>
                 <Button type="primary" htmlType="submit">
                     Sign up

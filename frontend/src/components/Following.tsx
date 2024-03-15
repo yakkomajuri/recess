@@ -25,11 +25,7 @@ export const Following = () => {
                         <Empty
                             style={{ marginTop: 100 }}
                             image={Empty.PRESENTED_IMAGE_SIMPLE}
-                            description={
-                                <span style={{ color: '#626262' }}>
-                                    You don't follow any feeds yet.
-                                </span>
-                            }
+                            description={<span style={{ color: '#626262' }}>You don't follow any feeds yet.</span>}
                         />
                     </Col>
                 </Row>
@@ -37,4 +33,3 @@ export const Following = () => {
         </>
     )
 }
-

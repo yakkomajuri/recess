@@ -29,8 +29,8 @@ const BottomNav = () => {
             <a onClick={() => navigate('/feeds')} className="icon-holder">
                 <BarsOutlined />
             </a>
-            <a className='icon-holder' onClick={importButtonClick}>
-                <PlusCircleFilled  />
+            <a className="icon-holder" onClick={importButtonClick}>
+                <PlusCircleFilled />
             </a>
             <a onClick={() => navigate('/explore')} className="icon-holder">
                 <SearchOutlined />

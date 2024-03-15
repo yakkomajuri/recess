@@ -47,7 +47,17 @@ const FeedSearchResultsPage = () => {
                                 ) : (
                                     <Row style={{ width: '100%', marginBottom: 10 }}>
                                         <Col style={{ width: '100%' }}>
-                                            {feedsLoading ? <Spin size='large' style={{ marginTop: 100, display: 'block', marginLeft: 'auto', marginRight: 'auto'  }} /> : (
+                                            {feedsLoading ? (
+                                                <Spin
+                                                    size="large"
+                                                    style={{
+                                                        marginTop: 100,
+                                                        display: 'block',
+                                                        marginLeft: 'auto',
+                                                        marginRight: 'auto',
+                                                    }}
+                                                />
+                                            ) : (
                                                 <Empty
                                                     style={{ marginTop: 100 }}
                                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -58,7 +68,6 @@ const FeedSearchResultsPage = () => {
                                                     }
                                                 />
                                             )}
-
                                         </Col>
                                     </Row>
                                 )}
