@@ -62,7 +62,7 @@ const Profile = () => {
                     </p>
                 ) : user.email_verification_status === EmailVerificationStatus.VerifyEmailSent ? (
                     <p>
-                        Email sent to <i>{user.email}</i>.
+                        Verification email sent to <i>{user.email}</i>.
                     </p>
                 ) : (
                     <a onClick={verifyEmail}>
