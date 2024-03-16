@@ -83,7 +83,7 @@ class UserViewSet(viewsets.ViewSet):
             'user': user,
             'link': link,
         })
-        send_mail(subject, message, None, [user.email])
+        send_mail(subject, message, 'yakko@recessfeed.com', [user.email])
         user.email_verification_status = EmailVerificationStatus.VerifyEmailSent
         user.save()
         return Response(status=status.HTTP_200_OK)
