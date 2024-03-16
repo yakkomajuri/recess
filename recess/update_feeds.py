@@ -1,5 +1,5 @@
 import time
-from recess.models import Feed, Post, User
+from recess.models import Feed, Post, User, EmailVerificationStatus
 import feedparser
 import requests
 from email.utils import parsedate_to_datetime
