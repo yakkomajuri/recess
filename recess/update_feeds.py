@@ -8,7 +8,7 @@ from recess.lock_utils import get_lock, release_lock
 import os
 
 FEED_UPDATE_LOCK = 'feed-update'
-SLEEP_DURATION = 20
+SLEEP_DURATION = 300
 
 def update_feeds():
     Lock.objects.get_or_create(lock_name=FEED_UPDATE_LOCK)
