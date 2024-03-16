@@ -34,6 +34,7 @@ def update_feeds():
                     feed_publisher_email = rss_feed.feed.publisher_detail.email
                 
                 if feed_publisher_email is not None:
+                    feed.feed_publisher_email = feed_publisher_email
                     user_queryset = User.objects.filter(email=feed_publisher_email, email_verification_status=EmailVerificationStatus.Verified)
                     if len(user_queryset) > 0:
                         feed.feed_owner = user_queryset[0]
