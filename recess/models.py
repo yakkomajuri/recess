@@ -3,6 +3,7 @@ from uuid import uuid4
 import datetime
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+import pytz
 
 class EmailVerificationStatus():
     NotVerified = 0
@@ -106,3 +107,11 @@ class PostComment(models.Model):
         "self", null=True, blank=True, on_delete=models.SET_NULL
     )
     comment_timestamp = models.DateTimeField(default=datetime.datetime.now)
+
+class Lock(models.Model):
+    lock_name = models.CharField(
+        primary_key=True,
+        max_length=50
+    )
+    owner_process_id = models.IntegerField(blank=True, null=True)
+    lock_expiry = models.DateTimeField(default=datetime.datetime.now(tz=pytz.utc) + datetime.timedelta(minutes=1))

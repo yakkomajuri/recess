@@ -1,23 +1,34 @@
 import time
-from recess.models import Feed, Post, User, EmailVerificationStatus
+from recess.models import Feed, Post, User, EmailVerificationStatus, Lock
 import feedparser
 import requests
 from email.utils import parsedate_to_datetime
 from recess.feed_utils import parse_date, tz_aware_datetime
+from recess.lock_utils import get_lock, release_lock
+import os
 
-
+FEED_UPDATE_LOCK = 'feed-update'
+SLEEP_DURATION = 20
 
 def update_feeds():
+    Lock.objects.get_or_create(lock_name=FEED_UPDATE_LOCK)
+    had_lock = False
+    
     while True:
-        # Sleep first to avoid running this on startup. 300s = 5min
-        time.sleep(300)
+        if not had_lock:
+            time.sleep(SLEEP_DURATION)
         
+        if not get_lock(FEED_UPDATE_LOCK):
+            print(os.getpid(), 'I do not have the lock')
+            continue
+        
+        print(os.getpid(), 'I have the lock')
         print('Updating feeds...')
         for feed in Feed.objects.all():
             print(f'Updating feed {feed.feed_name} ({feed.feed_uuid})')
             try:
                 rss_feed = feedparser.parse(feed.feed_url)
-                feed_last_publish = tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated)) if rss_feed.feed.updated is not None else None
+                feed_last_publish = tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated)) if hasattr(rss_feed.feed, 'updated') else None
                 
                 
                 # if the feed declares when it was published and that hasn't changed since we last imported it, no need to update
@@ -64,17 +75,19 @@ def update_feeds():
                     # feed being wrong and not updating their lastBuildDate - unsure we should
                     if (post_published_date and post_published_date > feed.feed_last_publish) and (not Post.objects.filter(post_url=entry['link'], feed=feed).exists()):
                         print(f"New post {entry['title']}")
-                        Post.objects.create(
-                            feed = feed,
-                            post_url = entry['link'],
-                            post_name = entry['title'],
-                            post_published_date = post_published_date,
-                            post_description = entry['summary']
-                        )
+                        try:
+                            Post.objects.create(
+                                feed = feed,
+                                post_url = entry['link'],
+                                post_name = entry['title'],
+                                post_published_date = post_published_date,
+                                post_description = entry['summary']
+                            )
+                        except:
+                            pass
                 
                 feed.feed_last_publish = feed_last_publish
                 feed.save()
-
                         
             except Exception as e:
                 # it's ok if we can't update a feed. 
@@ -82,6 +95,14 @@ def update_feeds():
                 # but for now it's ok
                 print(e)
 
+            
+            time.sleep(SLEEP_DURATION)
+            
+            # release lock after sleep to prevent a lagging worker from picking it up on the same iteration
+            had_lock = True
+            release_lock(FEED_UPDATE_LOCK)
+
+            
             
         
         
