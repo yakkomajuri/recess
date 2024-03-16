@@ -28,7 +28,10 @@ def update_feeds():
                 feed.feed_description = rss_feed.feed.description
                 feed_picture_url = ''
                 
-                feed_publisher_email = rss_feed.feed.publisher_detail.email
+                feed_publisher_email = None
+                
+                if hasattr(rss_feed.feed, 'publisher_detail') and hasattr(rss_feed.feed.publisher_detail, 'email'):
+                    feed_publisher_email = rss_feed.feed.publisher_detail.email
                 
                 if feed_publisher_email is not None:
                     user_queryset = User.objects.filter(email=feed_publisher_email, email_verification_status=EmailVerificationStatus.Verified)

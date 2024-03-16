@@ -48,7 +48,12 @@ class FeedSerializer(serializers.ModelSerializer):
             if rss_feed.feed.updated is not None
             else None
         )
-        feed_publisher_email = rss_feed.feed.publisher_detail.email
+        
+        feed_publisher_email = None
+        
+        if hasattr(rss_feed.feed, 'publisher_detail') and hasattr(rss_feed.feed.publisher_detail, 'email'):
+            feed_publisher_email = rss_feed.feed.publisher_detail.email
+            
         feed_owner = None
         
         if feed_publisher_email is not None:
