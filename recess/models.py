@@ -29,6 +29,8 @@ class URLField(models.URLField):
 
 
 class User(AbstractUser):
+    # somehow email isn't unique by default in django's user model??
+    email = models.EmailField(unique=True)
     feeds_following = models.ManyToManyField(
         "Feed", related_name="feeds_following", blank=True
     )
