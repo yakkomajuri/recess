@@ -15,6 +15,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import EmailMessage
+
 
 User = get_user_model()
 
@@ -79,11 +81,19 @@ class UserViewSet(viewsets.ViewSet):
         link = request.build_absolute_uri(reverse('verify', kwargs={'uidb64': uid, 'token': token}))
         
         subject = 'Activate Your Account'
-        message = render_to_string('verification_email.html', {
+        html_message = render_to_string('verification_email.html', {
             'user': user,
             'link': link,
         })
-        send_mail(subject, message, 'yakko@recessfeed.com', [user.email])
+        email = EmailMessage(
+            subject,
+            html_message,
+            'yakko@recessfeed.com',
+            [user.email],
+        )
+        email.content_subtype = "html"
+        email.send()
+
         user.email_verification_status = EmailVerificationStatus.VerifyEmailSent
         user.save()
         return Response(status=status.HTTP_200_OK)
