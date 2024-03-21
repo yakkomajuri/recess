@@ -19,7 +19,7 @@ const Comment = ({ author, avatar, date, content, uuid }: CommentProps) => {
 
     const deleteComment = async () => {
         try {
-            const res = await api.delete(`/post_comments/${uuid}`)
+            const res = await api.delete(`/post_comments/${uuid}/delete_comment`)
             if (res.status === 204) {
                 notification.success({
                     message: 'Comment deleted successfully',

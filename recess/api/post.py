@@ -265,6 +265,8 @@ class PostCommentViewset(viewsets.ModelViewSet):
     def delete_comment(self, request, **kwargs):
         comment = self.get_object()
         if comment.comment_author == request.user:
+            comment.post.post_comment_count -= 1
+            comment.post.save()
             comment.delete()
             return Response(status=204)
         else:
