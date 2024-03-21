@@ -4,6 +4,7 @@ import { api } from '../../lib/api'
 import { useActions, useValues } from 'kea'
 import { newFeedModalLogic } from './newFeedModalLogic'
 import { useNavigate } from 'react-router-dom'
+import { capitalizeFirstLetter } from '../../lib/capitalizeFirstLetter'
 
 const NewFeedModal = () => {
     // const { loadPosts } = useActions(timelineLogic);
@@ -34,7 +35,7 @@ const NewFeedModal = () => {
                 notification.error({
                     message: 'Importing feed failed',
                     description: Array.isArray(errors[0])
-                        ? errors[0][0]
+                        ? capitalizeFirstLetter(errors[0][0])
                         : 'Failed to import the feed. Please try again.',
                 })
                 return

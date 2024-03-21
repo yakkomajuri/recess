@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 import requests
 from email.utils import parsedate_to_datetime
 from recess.feed_utils import parse_date, tz_aware_datetime
-
+from rest_framework.exceptions import ValidationError
 
 class FeedSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,13 +39,19 @@ class FeedSerializer(serializers.ModelSerializer):
         
     def create(self, validated_data):
         feed_uuid = uuid4()
+        
         rss_feed = feedparser.parse(validated_data["feed_url"])
-        feed_name = rss_feed.feed.title  # this needs error handling
-        feed_description = rss_feed.feed.description  # this needs error handling
+        
+        try:
+            feed_name = rss_feed.feed.title
+        except Exception:
+            raise ValidationError({'errors': ["Feed URL isn't a  valid RSS feed or is formatted incorrectly."]})
+        
+        feed_description = rss_feed.feed.get('description', '')
         feed_picture_url = ""
         feed_last_publish = (
             tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated))
-            if rss_feed.feed.updated is not None
+            if rss_feed.feed.get('updated', None) is not None
             else None
         )
         
