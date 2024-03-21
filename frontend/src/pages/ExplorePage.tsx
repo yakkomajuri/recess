@@ -8,6 +8,7 @@ import { ExploreTimeline } from '../components/explore/ExploreTimeline'
 import { Trending } from '../components/trending/Trending'
 import { BottomNav } from '../components/bottom-nav/BottomNav'
 import { FeedSearch } from '../components/search/FeedSearch'
+import { WelcomeMesage } from '../components/WelcomeMessage'
 
 const { Content } = Layout
 
@@ -21,12 +22,12 @@ const ExplorePage = () => {
                         <div className="mobile-feed-search" style={{ marginBottom: 20 }}>
                             <FeedSearch />
                         </div>
-
                         <Row>
                             <Col span={6} xs={0} sm={6}>
                                 <SideNav />
                             </Col>
                             <Col span={12} xs={24} sm={12}>
+                                <WelcomeMesage />
                                 <ExploreTimeline />
                             </Col>
                             <Col span={6} xs={0} sm={6}>

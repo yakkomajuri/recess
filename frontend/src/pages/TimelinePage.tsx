@@ -8,6 +8,7 @@ import { TimelineHeader } from '../components/timeline/TimelineHeader'
 import { Trending } from '../components/trending/Trending'
 import { BottomNav } from '../components/bottom-nav/BottomNav'
 import { FeedSearch } from '../components/search/FeedSearch'
+import { WelcomeMesage } from '../components/WelcomeMessage'
 
 const { Content } = Layout
 
@@ -23,6 +24,7 @@ const TimelinePage = () => {
                                 <SideNav />
                             </Col>
                             <Col span={12} xs={24} sm={12}>
+                                <WelcomeMesage />
                                 <Timeline />
                             </Col>
                             <Col span={6} xs={0} sm={6}>

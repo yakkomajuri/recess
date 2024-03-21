@@ -1,5 +1,5 @@
-import React from 'react'
-import { Form, Input, Button, notification, Modal } from 'antd'
+import React, { useState } from 'react'
+import { Form, Input, Button, notification, Modal, Spin } from 'antd'
 import { api } from '../../lib/api'
 import { useActions, useValues } from 'kea'
 import { newFeedModalLogic } from './newFeedModalLogic'
@@ -7,16 +7,18 @@ import { useNavigate } from 'react-router-dom'
 import { capitalizeFirstLetter } from '../../lib/capitalizeFirstLetter'
 
 const NewFeedModal = () => {
-    // const { loadPosts } = useActions(timelineLogic);
+    const [loadingFeed, setLoadingFeed] = useState(false)
     const { isModalOpen } = useValues(newFeedModalLogic)
     const { setIsModalOpen } = useActions(newFeedModalLogic)
     const navigate = useNavigate()
 
     const handleSubmit = async ({ feedName, feedUrl }: { feedName?: string; feedUrl?: string }) => {
+        setLoadingFeed(true)
         try {
             const response = await api.post('/feed', {
                 feed_url: feedUrl,
             })
+            setLoadingFeed(false)
             notification.success({
                 message: 'Submit Success',
                 description: 'Feed imported successfully.',
@@ -25,6 +27,7 @@ const NewFeedModal = () => {
             navigate(`/feed/${response.data.feed_uuid}`)
             // loadPosts()
         } catch (error: any) {
+            setLoadingFeed(false)
             // If the user is not authenticated, redirect to login page
             if ((error as any).response.status === 401) {
                 window.location.href = '/login'
@@ -67,7 +70,7 @@ const NewFeedModal = () => {
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" block>
-                            Import
+                            {loadingFeed ? <Spin /> : 'Import'}
                         </Button>
                     </Form.Item>
                 </Form>
