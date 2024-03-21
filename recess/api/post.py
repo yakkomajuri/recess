@@ -8,6 +8,7 @@ from rest_framework.decorators import action
 from recess.api.api_utils import get_paginated_queryset
 from recess.settings import DEFAULT_PAGE_SIZE
 from recess.models import User
+from django.contrib.auth.models import AnonymousUser 
 
 
 def _add_user_metadata_to_posts(posts, user: User):
@@ -190,7 +191,7 @@ class ExploreView(APIView):
 
         serializer = PostSerializer(queryset, many=True, context={"request": request})
 
-        if False:
+        if request.user is not None and type(request.user) != AnonymousUser:
             data = _add_user_metadata_to_posts(serializer.data, request.user)
         else:
             data = serializer.data
