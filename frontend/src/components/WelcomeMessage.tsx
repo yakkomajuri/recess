@@ -13,7 +13,7 @@ export const WelcomeMesage = () => {
         <Alert
             message={<>
                 Hey there! Welcome to Recess. If you want to learn more about us, check out our {' '}
-                <a href="https://github.com/yakkomajuri/recess/blob/main/manifesto-ish.md#recess-manifesto-ish" target='_blank'>Manifesto-ish</a>.
+                <a href="https://github.com/yakkomajuri/recess/blob/main/manifesto-ish.md#recess-manifesto-ish" target='_blank' rel="noreferrer">Manifesto-ish</a>.
             </>}
             closable
             showIcon
