@@ -1,5 +1,7 @@
 # Recess Manifesto-ish
 
+> Also check out [Roadmap](roadmap.md).
+
 The idea that sat inside the bottom drawer for months and eventually became Recess was "social media for blogs" (also expressed later as "connecting personal websites"). That was the original term I had in mind for what I envisioned this to be.
 
 There are a lot of influences that got me to this point. One is that my relationship with social media has always been a shaky one. I cut myself off from it entirely during some of my core young years (20-23 years old) and currently am on it with mixed feelings. I do want to interact and keep in touch with people but I struggle to fight against the pervasive patterns a lot of these platforms are built with that mess with me. 
@@ -34,9 +36,9 @@ And thus we get to where I think something like Recess can come in.
 
 The idea for Recess is to be a content aggregator where you can keep up and interact with what I'm calling "siloed content".
 
-In simple terms, you could say it's sort of like an interactive RSS reader.
+In simple terms, you could say it's sort of like an interactive RSS reader, although this is slightly misleading given we don't want the reading to happen in Recess, rather we want to foster accessing the content at the origin, thus supporting its author.
 
-But the idea is to have a platform where:
+Nevertheless, the idea is to have a platform where:
 
 - You can import feeds (content) from anywhere on the internet - could be a blog, personal website, news site, or anything really.
 - You and others can interact with that content, even if at its source doing so isn't supported.
