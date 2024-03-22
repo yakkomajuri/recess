@@ -10,10 +10,9 @@ import { PostComment, postLogic } from '../components/post/postLogic'
 import { Comment } from '../components/comment/Comment'
 import { CommentInput } from '../components/comment/CommentInput'
 import { timeAgo } from '../lib/dateUtils'
+import { BottomNav } from '../components/bottom-nav/BottomNav'
 
 import '../App.css'
-import { getGravatarUrl } from '../lib/gravatar'
-import { BottomNav } from '../components/bottom-nav/BottomNav'
 
 const { Content } = Layout
 
@@ -53,7 +52,7 @@ const PostPage = () => {
                                                     key={comment.comment_uuid}
                                                     uuid={comment.comment_uuid}
                                                     author={comment.comment_username}
-                                                    avatar={getGravatarUrl(comment.comment_user_email)}
+                                                    avatar={`https://www.gravatar.com/avatar/${comment.comment_user_email_hash}?s=64&d=mp`}
                                                     date={timeAgo(comment.comment_timestamp)}
                                                     content={comment.comment_content}
                                                 />

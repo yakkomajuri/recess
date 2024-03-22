@@ -12,6 +12,7 @@ export const searchLogic = kea<searchLogicType>([
     key((props) => props.searchParam || ''),
     defaults(() => ({
         feeds: [],
+        users: [],
     })),
     loaders(({ props }) => ({
         feeds: {
@@ -30,8 +31,25 @@ export const searchLogic = kea<searchLogicType>([
                 }
             },
         },
+        users: {
+            loadUsers: async (): Promise<Feed[]> => {
+                if (!props.searchParam) {
+                    return []
+                }
+                try {
+                    const response = await api.get(`/user/search?search=${props.searchParam}`)
+                    if (response.status === 200) {
+                        return response.data
+                    }
+                    return []
+                } catch (error) {
+                    return []
+                }
+            },
+        },
     })),
     afterMount(({ actions }) => {
         actions.loadFeeds()
+        actions.loadUsers()
     }),
 ])

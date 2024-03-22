@@ -48,7 +48,13 @@ const Comment = ({ author, avatar, date, content, uuid }: CommentProps) => {
             </div>
             <div className="comment-body">
                 <div className="comment-header">
-                    <span className="comment-author"  style={{ cursor: 'pointer' }} onClick={() => navigate(`/user/${author}`)}>{author}</span>
+                    <span
+                        className="comment-author"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => navigate(`/user/${author}`)}
+                    >
+                        {author}
+                    </span>
                     <span className="comment-date">
                         {date}{' '}
                         {user?.username === author ? (

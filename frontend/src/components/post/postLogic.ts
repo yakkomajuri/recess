@@ -25,7 +25,7 @@ export interface PostComment {
     comment_timestamp: string
     comment_user_picture_url: string
     comment_username: string
-    comment_user_email: string
+    comment_user_email_hash: string
 }
 
 export interface CommentToCreate {

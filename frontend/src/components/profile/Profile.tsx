@@ -73,11 +73,7 @@ const Profile = () => {
 
                 <Form onFinish={handleBioSubmit}>
                     <Form.Item name="bio" initialValue={bio} style={{ marginBottom: 5 }}>
-                        <Input.TextArea
-                            maxLength={500}
-                            rows={4}
-                            placeholder={`We currently don't display this anywhere but probably will soon. The page just looked empty without it.`}
-                        />
+                        <Input.TextArea maxLength={500} rows={4} />
                     </Form.Item>
                     <Form.Item shouldUpdate>
                         <Row justify="end">

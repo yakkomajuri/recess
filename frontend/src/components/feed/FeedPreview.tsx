@@ -7,7 +7,6 @@ import { Post } from '../post/postLogic'
 import { useNavigate } from 'react-router-dom'
 
 const FeedPreviewTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; feedUuid: Post['feed_uuid'] }) => {
-
     return (
         <div
             style={{
@@ -19,9 +18,7 @@ const FeedPreviewTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name'];
                 cursor: 'pointer',
             }}
         >
-            <p style={{ marginRight: 10, fontSize: 14, marginBottom: 2 }}>
-                {feedName}
-            </p>
+            <p style={{ marginRight: 10, fontSize: 14, marginBottom: 2 }}>{feedName}</p>
         </div>
     )
 }
@@ -36,11 +33,11 @@ const FeedPreview = ({ feedUuid }: { feedUuid?: string }) => {
     }
 
     return (
-        <div className='feed-preview'>
+        <div className="feed-preview">
             <Card
                 hoverable
                 style={{ borderRadius: 0, lineHeight: '1em', paddingBottom: 2 }}
-                onClick={() =>  navigate(`/feed/${feedUuid}`)}
+                onClick={() => navigate(`/feed/${feedUuid}`)}
             >
                 <Card.Meta
                     avatar={

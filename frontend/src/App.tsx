@@ -9,7 +9,7 @@ import { FollowingPage } from './pages/FollowingPage'
 import { ExplorePage } from './pages/ExplorePage'
 import { PostPage } from './pages/PostPage'
 import { ProfilePage } from './pages/ProfilePage'
-import { FeedSearchResultsPage } from './pages/FeedSearchResultsPage'
+import { SearchResultsPage } from './pages/SearchResultsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PublicProfilePage } from './pages/PublicProfilePage'
 
@@ -34,7 +34,7 @@ const App = () => {
                 <Route path="/profile" element={!!user ? <ProfilePage /> : <Navigate to="/login" replace />} />
                 <Route path="/feed/:feed_uuid" element={<FeedPage />} />
                 <Route path="/post/:post_uuid" element={<PostPage />} />
-                <Route path="/search/:search" element={<FeedSearchResultsPage />} />
+                <Route path="/search/:search" element={<SearchResultsPage />} />
                 <Route path="/user/:username" element={<PublicProfilePage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

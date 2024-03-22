@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 import requests
 from email.utils import parsedate_to_datetime
-from recess.feed_utils import parse_date, tz_aware_datetime
+from recess.utils.feed_utils import parse_date, tz_aware_datetime
 from rest_framework.exceptions import ValidationError
 
 class FeedSerializer(serializers.ModelSerializer):

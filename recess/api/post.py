@@ -9,6 +9,7 @@ from recess.api.api_utils import get_paginated_queryset
 from recess.settings import DEFAULT_PAGE_SIZE
 from recess.models import User
 from django.contrib.auth.models import AnonymousUser 
+from recess.utils.hash_utils import generate_md5_hash
 
 
 def _add_user_metadata_to_posts(posts, user: User):
@@ -209,7 +210,7 @@ class ExploreView(APIView):
 
 class PostCommentSerializer(serializers.ModelSerializer):
     comment_username = serializers.SerializerMethodField()
-    comment_user_email = serializers.SerializerMethodField()
+    comment_user_email_hash = serializers.SerializerMethodField()
 
     class Meta:
         model = PostComment
@@ -219,14 +220,14 @@ class PostCommentSerializer(serializers.ModelSerializer):
             "post",
             "comment_timestamp",
             "comment_username",
-            "comment_user_email",
+            "comment_user_email_hash",
         ]
 
     def get_comment_username(self, obj):
         return obj.comment_author.username
 
-    def get_comment_user_email(self, obj):
-        return obj.comment_author.email
+    def get_comment_user_email_hash(self, obj):
+        return generate_md5_hash(obj.comment_author.email)
 
 
 class PostCommentViewset(viewsets.ModelViewSet):

@@ -17,17 +17,10 @@ from django.template.loader import render_to_string
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import EmailMessage
 from django.shortcuts import get_object_or_404
-import hashlib
-
+from rest_framework import response
+from recess.utils.hash_utils import generate_md5_hash
 
 User = get_user_model()
-
-
-def generate_md5_hash(input_string):
-    input_bytes = input_string.encode('utf-8')
-    md5_hasher = hashlib.md5()
-    md5_hasher.update(input_bytes)
-    return md5_hasher.hexdigest()
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -49,7 +42,9 @@ class UserSerializer(serializers.ModelSerializer):
     def get_email_hash(self, obj):
         return generate_md5_hash(obj.email)
 
-class UserViewSet(viewsets.ViewSet):
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+
     permission_classes_by_action = {'create': [AllowAny],
                                      'login': [AllowAny],
                                     'profile': [AllowAny],
@@ -186,3 +181,13 @@ class UserViewSet(viewsets.ViewSet):
         user = get_object_or_404(User.objects.all(), username=username)
         serializer = UserSerializer(user)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=["get"])
+    def search(self, request):
+        search_param = request.query_params.get("search")
+        if search_param:
+            users = User.objects.filter(username__icontains=search_param)[:25]
+            serializer = self.get_serializer(users, many=True)
+            return response.Response(serializer.data)
+        else:
+            return response.Response([])

@@ -41,19 +41,6 @@ const Trending: React.FC = () => {
                     </List.Item>
                 )}
             />
-            {/* <List
-        header={<div>Posts</div>}
-        dataSource={trendingPosts}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar src={item.avatar} />}
-              title={item.title}
-              description={<><LikeOutlined /> {item.likes}</>}
-            />
-          </List.Item>
-        )}
-      /> */}
         </div>
     )
 }

@@ -1,12 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react'
-import { Avatar, Button, Input, Form, Col, Row, Divider, Tooltip, notification, Empty } from 'antd'
-import { useActions, useValues } from 'kea'
-import { EmailVerificationStatus, User, userLogic } from '../../userLogic'
-import { getGravatarUrl } from '../../lib/gravatar'
+import { Avatar, Col, Row, Divider } from 'antd'
 import { api } from '../../lib/api'
 import '../profile/Profile.css' // Import the CSS for additional styling
-import { FeedCard } from '../feed/FeedCard'
 import { FeedPreview } from '../feed/FeedPreview'
 import { useParams } from 'react-router-dom'
 import { Feed } from '../feed/feedLogic'
@@ -28,15 +24,11 @@ const PublicProfile = () => {
                 const res = await api.get(`/user/profile?username=${username}`)
                 console.log(res)
                 setUser(res.data)
-            } catch (error) {
-
-            }
+            } catch (error) {}
         }
 
         fetchUser()
-
     }, [username])
-
 
     if (!user) {
         return null
@@ -49,25 +41,23 @@ const PublicProfile = () => {
                 <h2>{user.username}</h2>
             </div>
             <div className="profile-content">
-
                 <div style={{ padding: 20 }}>
-                    <p style={{ color: !!user.bio ? 'default' : 'gray', marginBottom: 0}}>
+                    <p style={{ color: !!user.bio ? 'default' : 'gray', marginBottom: 0 }}>
                         {user.bio ?? `This user doesn't have a bio yet.`}
                     </p>
                 </div>
 
                 <Divider />
                 <h3 style={{ marginLeft: 20 }}>Following ({user.feeds_following.length})</h3>
-                {user!.feeds_following.length > 0 ? (
-                    user!.feeds_following.map((feed_uuid: string) => (
-                        <Row style={{ width: '100%', marginBottom: 10 }}>
-                            <Col style={{ width: '100%', padding: 20, lineHeight: 1 }}>
-                                <FeedPreview feedUuid={feed_uuid} />
-                            </Col>
-                        </Row>
-                    ))
-                ) : null}
-
+                {user!.feeds_following.length > 0
+                    ? user!.feeds_following.map((feed_uuid: string) => (
+                          <Row style={{ width: '100%', marginBottom: 10 }}>
+                              <Col style={{ width: '100%', padding: 20, lineHeight: 1 }}>
+                                  <FeedPreview feedUuid={feed_uuid} />
+                              </Col>
+                          </Row>
+                      ))
+                    : null}
             </div>
         </div>
     )

@@ -3,8 +3,8 @@ from recess.models import Feed, Post, User, EmailVerificationStatus, Lock
 import feedparser
 import requests
 from email.utils import parsedate_to_datetime
-from recess.feed_utils import parse_date, tz_aware_datetime
-from recess.lock_utils import get_lock, release_lock
+from recess.utils.feed_utils import parse_date, tz_aware_datetime
+from recess.utils.lock_utils import get_lock, release_lock
 import os
 
 FEED_UPDATE_LOCK = 'feed-update'

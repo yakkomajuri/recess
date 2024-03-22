@@ -7,7 +7,11 @@ const FeedSearch = () => {
     const navigate = useNavigate()
 
     return (
-        <Search className="feed-search" placeholder="Search feeds" onSearch={(value) => navigate(`/search/${value}`)} />
+        <Search
+            className="feed-search"
+            placeholder="Search feeds and users"
+            onSearch={(value) => navigate(`/search/${value}`)}
+        />
     )
 }
 
