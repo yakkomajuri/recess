@@ -8,7 +8,6 @@ import { api } from '../../lib/api'
 import { Post } from '../post/postLogic'
 import { useNavigate } from 'react-router-dom'
 import { GravatarDefaultType, getGravatarUrl } from '../../lib/gravatar'
-import { generateAvatar } from '../../lib/generateAvatar'
 
 const FeedCardTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; feedUuid: Post['feed_uuid'] }) => {
     const { user } = useValues(userLogic)
