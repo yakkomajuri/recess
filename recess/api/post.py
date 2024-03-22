@@ -183,9 +183,8 @@ class ExploreView(APIView):
         page = int(request.GET.get("page", 0))
         if request.user.is_authenticated:
             queryset = Post.objects.exclude(
-                feed__in=request.user.feeds_following.all(),
-                feed__hide_from_discovery=True
-            ).order_by("-post_published_date")
+                feed__in=request.user.feeds_following.all()
+            ).exclude(feed__hide_from_discovery=True).order_by("-post_published_date")
         else:
             queryset = Post.objects.filter(feed__hide_from_discovery=False).order_by("-post_published_date")
 

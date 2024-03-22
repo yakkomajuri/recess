@@ -4,3 +4,7 @@ export const trimString = (str: string, maxSize = 50) => {
     }
     return str
 }
+
+export const removeHttpLinks = (str: string) => {
+    return str.replace(/\[\s*http.*?\]/g, '');
+}

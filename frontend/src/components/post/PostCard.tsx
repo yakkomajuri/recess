@@ -9,6 +9,7 @@ import { Post, postLogic } from './postLogic'
 import { useNavigate } from 'react-router-dom'
 import { GravatarDefaultType, getGravatarUrl } from '../../lib/gravatar'
 import { htmlToText } from 'html-to-text'
+import { removeHttpLinks } from '../../lib/stringUtils'
 
 const PostCardTitle = ({
     feedName,
@@ -176,7 +177,7 @@ const PostCard = ({ post, isExplorePage }: { post: Post; isExplorePage?: boolean
                         >
                             {post.post_name}
                         </p>
-                        <p>{htmlToText(post.post_description)}</p>
+                        <p>{removeHttpLinks(htmlToText(post.post_description))}</p>
                         <small>{new Date(post.post_published_date).toLocaleString()}</small>
                     </div>
                 }
