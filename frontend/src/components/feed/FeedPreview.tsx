@@ -36,7 +36,7 @@ const FeedPreview = ({ feedUuid }: { feedUuid?: string }) => {
         <div className="feed-preview">
             <Card
                 hoverable
-                style={{ borderRadius: 0, lineHeight: '1em', paddingBottom: 2 }}
+                style={{ borderRadius: 0, paddingBottom: 2 }}
                 onClick={() => navigate(`/feed/${feedUuid}`)}
             >
                 <Card.Meta

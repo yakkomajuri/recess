@@ -41,7 +41,7 @@ const PublicProfile = () => {
                 <h2>{user.username}</h2>
             </div>
             <div className="profile-content">
-                <div style={{ padding: 20 }}>
+                <div style={{ marginLeft: 20 }}>
                     <p style={{ color: !!user.bio ? 'default' : 'gray', marginBottom: 0 }}>
                         {user.bio ?? `This user doesn't have a bio yet.`}
                     </p>
@@ -52,7 +52,7 @@ const PublicProfile = () => {
                 {user!.feeds_following.length > 0
                     ? user!.feeds_following.map((feed_uuid: string) => (
                           <Row style={{ width: '100%', marginBottom: 10 }}>
-                              <Col style={{ width: '100%', padding: 20, lineHeight: 1 }}>
+                              <Col style={{ width: '100%', marginLeft: 20 }}>
                                   <FeedPreview feedUuid={feed_uuid} />
                               </Col>
                           </Row>
