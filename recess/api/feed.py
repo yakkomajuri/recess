@@ -20,7 +20,8 @@ class FeedSerializer(serializers.ModelSerializer):
             "feed_picture_url",
             "feed_last_updated",
             "feed_description",
-            "feed_publisher_email"
+            "feed_publisher_email",
+            "hide_from_discovery"
         ]
         read_only_fields = [
             "feed_uuid",
@@ -29,7 +30,8 @@ class FeedSerializer(serializers.ModelSerializer):
             "feed_picture_url",
             "feed_last_updated",
             "feed_description",
-            "feed_publisher_email"
+            "feed_publisher_email",
+            "hide_from_discovery"
         ]
 
     def _user(self):
@@ -120,7 +122,7 @@ class FeedViewset(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["get"])
     def trending(self, request):
-        trending_feeds = Feed.objects.order_by("-feed_follower_count")[:5]
+        trending_feeds = Feed.objects.filter(hide_from_discovery=False).order_by("-feed_follower_count")[:5]
         serializer = self.get_serializer(trending_feeds, many=True)
         return response.Response(serializer.data)
     

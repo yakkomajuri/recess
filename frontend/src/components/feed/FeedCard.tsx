@@ -8,6 +8,7 @@ import { api } from '../../lib/api'
 import { Post } from '../post/postLogic'
 import { useNavigate } from 'react-router-dom'
 import { GravatarDefaultType, getGravatarUrl } from '../../lib/gravatar'
+import { generateAvatar } from '../../lib/generateAvatar'
 
 const FeedCardTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; feedUuid: Post['feed_uuid'] }) => {
     const { user } = useValues(userLogic)
@@ -103,7 +104,8 @@ const FeedCard = ({ feedUuid }: { feedUuid?: string }) => {
             <Card.Meta
                 avatar={
                     <Avatar
-                        src={feed.feed_picture_url || getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Identicon)}
+                        style={{ border: '1px solid #efefff'}}
+                        src={feed.feed_picture_url || getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Retro)}
                     />
                 }
                 title={<FeedCardTitle feedName={feed.feed_name} feedUuid={feedUuid!} />}

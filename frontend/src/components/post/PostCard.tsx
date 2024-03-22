@@ -157,7 +157,7 @@ const PostCard = ({ post, isExplorePage }: { post: Post; isExplorePage?: boolean
                         src={
                             !!post.feed_picture_url
                                 ? post.feed_picture_url
-                                : getGravatarUrl(post.feed_uuid, GravatarDefaultType.Identicon)
+                                : getGravatarUrl(post.feed_uuid, GravatarDefaultType.Retro)
                         }
                     />
                 }

@@ -75,6 +75,10 @@ class Feed(models.Model):
     )
     
     feed_publisher_email = models.EmailField(blank=True, null=True)
+    
+    # A way for admins to hide feeds from explore and trending
+    # Initially mostly for me (@yakkomajuri) to hide news feeds to focus on personal websites
+    hide_from_discovery = models.BooleanField(default=False)
 
 
 class Post(models.Model):
@@ -107,11 +111,14 @@ class PostComment(models.Model):
         "self", null=True, blank=True, on_delete=models.SET_NULL
     )
     comment_timestamp = models.DateTimeField(default=datetime.datetime.now)
+    
 
+def lock_expiry_default():
+    return datetime.datetime.now(tz=pytz.utc) + datetime.timedelta(minutes=1)
 class Lock(models.Model):
     lock_name = models.CharField(
         primary_key=True,
         max_length=50
     )
     owner_process_id = models.IntegerField(blank=True, null=True)
-    lock_expiry = models.DateTimeField(default=datetime.datetime.now(tz=pytz.utc) + datetime.timedelta(minutes=1))
+    lock_expiry = models.DateTimeField(default=lock_expiry_default)

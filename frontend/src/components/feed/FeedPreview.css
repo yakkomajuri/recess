@@ -1,0 +1,10 @@
+@media (max-width: 576px) {
+    .feed-preview {
+        width: 95% !important;
+
+        .ant-card-meta-title {
+            display: flex;
+            width: 95% !important;
+        }
+    }
+}

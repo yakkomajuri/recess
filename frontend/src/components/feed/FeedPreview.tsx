@@ -5,6 +5,8 @@ import { feedLogic } from './feedLogic'
 import { GravatarDefaultType, getGravatarUrl } from '../../lib/gravatar'
 import { Post } from '../post/postLogic'
 import { useNavigate } from 'react-router-dom'
+import { trimString } from '../../lib/stringUtils'
+import './FeedPreview.css'
 
 const FeedPreviewTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; feedUuid: Post['feed_uuid'] }) => {
     return (
@@ -38,17 +40,18 @@ const FeedPreview = ({ feedUuid }: { feedUuid?: string }) => {
                 hoverable
                 style={{ borderRadius: 0, paddingBottom: 2 }}
                 onClick={() => navigate(`/feed/${feedUuid}`)}
+                className='feed-preview-card'
             >
                 <Card.Meta
                     avatar={
                         <Avatar
-                            src={feed.feed_picture_url || getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Identicon)}
+                            src={feed.feed_picture_url || getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Retro)}
                         />
                     }
                     title={<FeedPreviewTitle feedName={feed.feed_name} feedUuid={feedUuid!} />}
                     description={
                         <div>
-                            <p style={{ fontSize: 14, color: 'black', marginBottom: 2 }}>{feed.feed_description}</p>
+                            <p style={{ fontSize: 14, color: 'black', marginBottom: 2 }}>{trimString(feed.feed_description, 100)}</p>
                         </div>
                     }
                 />

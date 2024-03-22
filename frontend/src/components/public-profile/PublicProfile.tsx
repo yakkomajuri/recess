@@ -52,7 +52,7 @@ const PublicProfile = () => {
                 {user!.feeds_following.length > 0
                     ? user!.feeds_following.map((feed_uuid: string) => (
                           <Row style={{ width: '100%', marginBottom: 10 }}>
-                              <Col style={{ width: '100%', marginLeft: 20 }}>
+                              <Col style={{ width: '100%', marginLeft: 20 }} xl={22} lg={22} md={22} sm={22} xs={23}>
                                   <FeedPreview feedUuid={feed_uuid} />
                               </Col>
                           </Row>

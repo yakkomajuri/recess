@@ -31,7 +31,7 @@ const Trending: React.FC = () => {
                                 <Avatar
                                     src={
                                         feed.feed_picture_url ||
-                                        getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Identicon)
+                                        getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Retro)
                                     }
                                 />
                             }
