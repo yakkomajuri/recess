@@ -11,6 +11,7 @@ import { PostPage } from './pages/PostPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { FeedSearchResultsPage } from './pages/FeedSearchResultsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { PublicProfilePage } from './pages/PublicProfilePage'
 
 const App = () => {
     const { user, userLoading } = useValues(userLogic)
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="/feed/:feed_uuid" element={<FeedPage />} />
                 <Route path="/post/:post_uuid" element={<PostPage />} />
                 <Route path="/search/:search" element={<FeedSearchResultsPage />} />
+                <Route path="/user/:username" element={<PublicProfilePage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>

@@ -4,14 +4,16 @@ import '../App.css'
 import { NewFeedModal } from '../components/new-feed-modal/NewFeedModal'
 import { SideNav } from '../components/SideNav'
 import { TimelineHeader } from '../components/timeline/TimelineHeader'
-import { Profile } from '../components/profile/Profile'
 import { BottomNav } from '../components/bottom-nav/BottomNav'
+import { Trending } from '../components/trending/Trending'
+import { FeedSearch } from '../components/search/FeedSearch'
+import { PublicProfile } from '../components/public-profile/PublicProfile'
 
 const { Content } = Layout
 
-const ProfilePage = () => {
+const PublicProfilePage = () => {
     return (
-        <Layout style={{ minHeight: '100vh' }} className="profile-page">
+        <Layout style={{ minHeight: '100vh' }} className="public-profile-page">
             <TimelineHeader />
             <Layout>
                 <Layout>
@@ -20,12 +22,16 @@ const ProfilePage = () => {
                             <Col span={6} xs={0} sm={6}>
                                 <SideNav />
                             </Col>
-                            <Col span={18} xs={24} sm={18}>
+                            <Col span={12} xs={24} sm={12}>
                                 <Row style={{ width: '100%', marginBottom: 10 }}>
-                                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                                        <Profile />
+                                    <Col span={24}>
+                                        <PublicProfile />
                                     </Col>
                                 </Row>
+                            </Col>
+                            <Col span={6} xs={0} sm={6}>
+                                <Trending />
+                                <FeedSearch />
                             </Col>
                         </Row>
                     </Content>
@@ -37,4 +43,4 @@ const ProfilePage = () => {
     )
 }
 
-export { ProfilePage }
+export { PublicProfilePage }

@@ -16,30 +16,47 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import EmailMessage
+from django.shortcuts import get_object_or_404
+import hashlib
 
 
 User = get_user_model()
 
+
+def generate_md5_hash(input_string):
+    input_bytes = input_string.encode('utf-8')
+    md5_hasher = hashlib.md5()
+    md5_hasher.update(input_bytes)
+    return md5_hasher.hexdigest()
+
+
 class UserSerializer(serializers.ModelSerializer):
+    
+    email_hash = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'feeds_following', 'bio', 'email_verification_status']
-        read_only_fields = ['feeds_following', 'email_verification_status']
+        fields = ['username', 'bio', 'feeds_following', 'email_hash']
+        read_only_fields = ['username', 'bio', 'feeds_following', 'email_hash']
 
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-
+    
+    # used to pull user's gravatar
+    def get_email_hash(self, obj):
+        return generate_md5_hash(obj.email)
 
 class UserViewSet(viewsets.ViewSet):
     permission_classes_by_action = {'create': [AllowAny],
                                      'login': [AllowAny],
+                                    'profile': [AllowAny],
                                      'logout': [IsAuthenticated],
                                      'check': [IsAuthenticated],
                                      'details': [IsAuthenticated]}
-
+    
     def get_permissions(self):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
@@ -162,3 +179,10 @@ class UserViewSet(viewsets.ViewSet):
                   "email_verification_status": user.email_verification_status,
                 }
             )
+
+    @action(methods=["GET"], detail=False)
+    def profile(self, request, **kwargs):
+        username = request.GET.get('username')
+        user = get_object_or_404(User.objects.all(), username=username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)

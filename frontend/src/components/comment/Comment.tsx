@@ -5,6 +5,7 @@ import { useValues } from 'kea'
 import { userLogic } from '../../userLogic'
 import { api } from '../../lib/api'
 import { notification } from 'antd'
+import { useNavigate } from 'react-router-dom'
 interface CommentProps {
     author: string
     avatar: string
@@ -16,6 +17,7 @@ interface CommentProps {
 const Comment = ({ author, avatar, date, content, uuid }: CommentProps) => {
     const { user } = useValues(userLogic)
     const [commentDeleted, setCommentDeleted] = useState(false)
+    const navigate = useNavigate()
 
     const deleteComment = async () => {
         try {
@@ -41,12 +43,12 @@ const Comment = ({ author, avatar, date, content, uuid }: CommentProps) => {
 
     return (
         <div className="comment-container">
-            <div className="comment-avatar">
+            <div className="comment-avatar" style={{ cursor: 'pointer' }} onClick={() => navigate(`/user/${author}`)}>
                 <img src={avatar} alt={author} />
             </div>
             <div className="comment-body">
                 <div className="comment-header">
-                    <span className="comment-author">{author}</span>
+                    <span className="comment-author"  style={{ cursor: 'pointer' }} onClick={() => navigate(`/user/${author}`)}>{author}</span>
                     <span className="comment-date">
                         {date}{' '}
                         {user?.username === author ? (
