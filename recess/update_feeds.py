@@ -28,7 +28,7 @@ def update_feeds():
             print(f'Updating feed {feed.feed_name} ({feed.feed_uuid})')
             try:
                 rss_feed = feedparser.parse(feed.feed_url)
-                feed_last_publish = tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated)) if hasattr(rss_feed.feed, 'updated') else None
+                feed_last_publish = tz_aware_datetime(parse_date(rss_feed.feed.updated)) if hasattr(rss_feed.feed, 'updated') else None
                 
                 
                 # if the feed declares when it was published and that hasn't changed since we last imported it, no need to update
@@ -62,7 +62,7 @@ def update_feeds():
                 feed.feed_picture_url = feed_picture_url
             
                 for entry in rss_feed.entries:
-                    post_published_date = parse_date(entry)
+                    post_published_date = parse_date(entry.get('published') or entry.get('pubDate'))
                     
                     # we're currently skipping posts we can't get a date for
                     # is this the best approach?

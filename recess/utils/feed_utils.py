@@ -13,16 +13,15 @@ def tz_aware_datetime(datetime, default_timezone='UTC'):
         return aware_datetime
 
 # extract this later and consider all possibilities
-def parse_date(entry):
+def parse_date(date_str):
     try:
-        return tz_aware_datetime(parsedate_to_datetime(entry['published'] or entry['pubDate']))
+        return tz_aware_datetime(parsedate_to_datetime(date_str))
     except Exception:
         pass
     
     try:
-        return tz_aware_datetime(datetime.fromisoformat(entry['published'] or entry['pubDate']))
+        return tz_aware_datetime(datetime.fromisoformat(date_str))
     except Exception as e:
-        print('Could not parse date', entry, e)
+        print('Could not parse date', date_str, e)
         return None
     
-

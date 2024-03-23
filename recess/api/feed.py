@@ -52,7 +52,7 @@ class FeedSerializer(serializers.ModelSerializer):
         feed_description = rss_feed.feed.get('description', '')
         feed_picture_url = ""
         feed_last_publish = (
-            tz_aware_datetime(parsedate_to_datetime(rss_feed.feed.updated))
+            tz_aware_datetime(parse_date(rss_feed.feed.updated))
             if rss_feed.feed.get('updated', None) is not None
             else None
         )
@@ -93,7 +93,7 @@ class FeedSerializer(serializers.ModelSerializer):
         res = super().create(feed_data)
 
         for entry in rss_feed.entries:
-            post_published_date = parse_date(entry)
+            post_published_date = parse_date(entry.get('published') or entry.get('pubDate'))
 
             # we're currently skipping posts we can't get a date for
             # is this the best approach?
