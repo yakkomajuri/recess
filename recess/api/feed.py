@@ -8,6 +8,7 @@ import requests
 from email.utils import parsedate_to_datetime
 from recess.utils.feed_utils import parse_date, tz_aware_datetime
 from rest_framework.exceptions import ValidationError
+from django.utils import timezone
 
 class FeedSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,7 +55,7 @@ class FeedSerializer(serializers.ModelSerializer):
         feed_last_publish = (
             tz_aware_datetime(parse_date(rss_feed.feed.updated))
             if rss_feed.feed.get('updated', None) is not None
-            else None
+            else timezone.now()
         )
         
         feed_publisher_email = None
@@ -93,7 +94,7 @@ class FeedSerializer(serializers.ModelSerializer):
         res = super().create(feed_data)
 
         for entry in rss_feed.entries:
-            post_published_date = parse_date(entry.get('published') or entry.get('pubDate'))
+            post_published_date = parse_date(entry.get('published') or entry.get('pubDate') or entry.get('updated'))
 
             # we're currently skipping posts we can't get a date for
             # is this the best approach?

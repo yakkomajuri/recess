@@ -62,7 +62,7 @@ def update_feeds():
                 feed.feed_picture_url = feed_picture_url
             
                 for entry in rss_feed.entries:
-                    post_published_date = parse_date(entry.get('published') or entry.get('pubDate'))
+                    post_published_date = parse_date(entry.get('published') or entry.get('pubDate') or entry.get('updated'))
                     
                     # we're currently skipping posts we can't get a date for
                     # is this the best approach?
