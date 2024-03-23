@@ -1,6 +1,6 @@
 # Recess Manifesto-ish
 
-> Also check out [Roadmap](roadmap.md).
+> Access Recess at [app.recessfeed.com](https://app.recessfeed.com), and also check out [Roadmap](roadmap.md) if you're keen.
 
 The idea that sat inside the bottom drawer for months and eventually became Recess was "social media for blogs" (also expressed later as "connecting personal websites"). That was the original term I had in mind for what I envisioned this to be.
 
