@@ -12,7 +12,7 @@ export const WelcomeMesage = () => {
         <Alert
             message={
                 <>
-                    Hey there! Welcome to Recess. If you want to learn more about us, check out our{' '}
+                    Hey there! Welcome to Recess. Here you can follow and interact with blogs, personal websites, and other deeper internet content that interests you. Try it out by importing a feed or following one! Recess is fully <b>open source</b>, and if you want to learn more about us, check out our{' '}
                     <a
                         href="https://github.com/yakkomajuri/recess/blob/main/manifesto-ish.md#recess-manifesto-ish"
                         target="_blank"
@@ -20,7 +20,7 @@ export const WelcomeMesage = () => {
                     >
                         Manifesto-ish
                     </a>
-                    .
+                    {' '}on GitHub.
                 </>
             }
             closable
