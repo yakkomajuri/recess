@@ -130,7 +130,7 @@ class FeedViewset(viewsets.ModelViewSet):
     def search(self, request):
         search_param = request.query_params.get("search")
         if search_param:
-            feeds = Feed.objects.filter(feed_name__icontains=search_param)[:25]
+            feeds = Feed.objects.filter(feed_name__icontains=search_param).order_by("-feed_follower_count")[:5]
             serializer = self.get_serializer(feeds, many=True)
             return response.Response(serializer.data)
         else:

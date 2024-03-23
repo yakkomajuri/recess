@@ -197,7 +197,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def search(self, request):
         search_param = request.query_params.get("search")
         if search_param:
-            users = User.objects.filter(username__icontains=search_param)[:25]
+            users = User.objects.filter(username__icontains=search_param)[:5]
             serializer = self.get_serializer(users, many=True)
             return response.Response(serializer.data)
         else:
