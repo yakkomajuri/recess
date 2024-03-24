@@ -3,9 +3,8 @@ from recess.models import Feed, Post, User, EmailVerificationStatus
 import feedparser
 from uuid import uuid4
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 import requests
-from email.utils import parsedate_to_datetime
 from recess.utils.feed_utils import parse_date, tz_aware_datetime
 from rest_framework.exceptions import ValidationError
 from django.utils import timezone
@@ -119,8 +118,13 @@ class FeedViewset(viewsets.ModelViewSet):
     queryset = Feed.objects.all().order_by("feed_uuid")
     serializer_class = FeedSerializer
 
-    permission_classes = [AllowAny]
-
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve', 'trending', 'search']:
+            return [AllowAny()]
+        elif self.action in ['create']:
+            return [IsAuthenticated()]
+        return [IsAdminUser()]
+    
     @action(detail=False, methods=["get"])
     def trending(self, request):
         trending_feeds = Feed.objects.filter(hide_from_discovery=False).order_by("-feed_follower_count")[:5]
