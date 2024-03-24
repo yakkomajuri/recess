@@ -97,6 +97,13 @@ class PostViewset(viewsets.ModelViewSet):
             return Post.objects.filter(feed__feed_uuid=feed_uuid).order_by(
                 "-post_published_date"
             )
+            
+        post_url = self.request.GET.get("post_url", None)
+        if post_url is not None:
+            return Post.objects.filter(post_url=post_url).order_by(
+                "-post_published_date"
+            )
+            
         return Post.objects.all()
 
     def get_serializer_context(self):
