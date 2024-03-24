@@ -2,6 +2,8 @@
 
 > 🔗 Try it live at **[app.recessfeed.com](https://app.recessfeed.com)**
 
+> 🎉 **New:** [Add comments to your website in one minute (Alpha)](https://github.com/yakkomajuri/recess-comments-snippet/tree/main?tab=readme-ov-file#recess-comments-widget-alpha).
+
 A content aggregator for keeping up and interacting with siloed content.
 
 Follow, discover, and engage with personal websites, blogs, and other sources of meaningful content that are often hard to find.
