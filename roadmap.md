@@ -18,9 +18,10 @@
 
 ### Key features
 
+- [x] "Widget" for comments on your own website: https://github.com/yakkomajuri/recess-comments-snippet
 - [ ] Import comments from HackerNews (and other select sources)
 - [ ] "My feeds" management
-- [ ] "Widget" for comments on your own website
+- [ ] Export your data
 
 ### Technical features
 
@@ -36,4 +37,4 @@
 - [ ] Clean up too many UI refreshes
 - [ ] Clean up too many requests
 - [ ] Better parsing of descriptions
-
+- [ ] Widget: Dark mode
