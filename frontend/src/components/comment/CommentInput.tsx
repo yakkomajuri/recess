@@ -1,12 +1,12 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import { Input, Button } from 'antd'
 import './CommentInput.css' // Import the custom CSS
 import { useActions, useValues } from 'kea'
 import { postLogic } from '../post/postLogic'
 import { userLogic } from '../../userLogic'
 
-const CommentInput = ({ postUuid }: { postUuid: string }) => {
-    const [commentText, setCommentText] = useState('')
+const CommentInput = ({ postUuid, initialCommentText }: { postUuid: string, initialCommentText: string }) => {
+    const [commentText, setCommentText] = useState(initialCommentText)
     const logic = postLogic({ postUuid })
     const { comment } = useActions(logic)
     const { user } = useValues(userLogic)
@@ -22,6 +22,12 @@ const CommentInput = ({ postUuid }: { postUuid: string }) => {
         })
         setCommentText('')
     }
+
+    useEffect(() => {
+        if (!!commentText) {
+            document.getElementById('post-comment-textarea')?.focus()
+        }
+    }, [commentText])
 
     return (
         <div className="comment-input-container">

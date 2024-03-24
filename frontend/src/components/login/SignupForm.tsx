@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, notification } from 'antd'
 import { api } from '../../lib/api'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useActions } from 'kea'
 import { userLogic } from '../../userLogic'
 
@@ -16,6 +16,12 @@ const SignupForm = () => {
     const navigate = useNavigate()
     const { loadUser } = useActions(userLogic)
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [searchParams, _] = useSearchParams()
+
+    const redirectURL = searchParams.get('redirect_path')
+
+
     const onFinish = async ({ username, email, password }: SignupFormValues) => {
         try {
             const response = await api.post(
@@ -27,7 +33,7 @@ const SignupForm = () => {
             )
             document.cookie = `authtoken=${response.data.token}`
             loadUser()
-            navigate('/timeline')
+            navigate(redirectURL || '/timeline')
         } catch (error) {
             notification.error({
                 message: 'Signup failed',

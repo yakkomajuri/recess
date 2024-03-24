@@ -1,7 +1,7 @@
 import html
 from rest_framework import serializers, viewsets
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from recess.models import Post, PostComment
 from rest_framework.decorators import action
@@ -83,11 +83,13 @@ class PostSerializer(serializers.ModelSerializer):
 
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-
+    
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             return [AllowAny()]
-        return [IsAuthenticated()]
+        elif self.action in ['like', 'unlike', 'timeline']:
+            return [IsAuthenticated()]
+        return [IsAdminUser()]
 
     def get_queryset(self):
         feed_uuid = self.request.GET.get("feed_uuid", None)
@@ -236,7 +238,9 @@ class PostCommentViewset(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             return [AllowAny()]
-        return [IsAuthenticated()]
+        elif self.action in ['create', 'delete_comment']:
+            return [IsAuthenticated()]
+        return [IsAdminUser()]
 
     def get_queryset(self):
         post_uuid = self.request.GET.get("post_uuid", None)
@@ -244,6 +248,13 @@ class PostCommentViewset(viewsets.ModelViewSet):
             return PostComment.objects.filter(post__post_uuid=post_uuid).order_by(
                 "-comment_timestamp"
             )
+        
+        post_url = self.request.GET.get("post_url", None)
+        if post_url is not None:
+            return PostComment.objects.filter(post__post_url=post_url).order_by(
+                "-comment_timestamp"
+            )
+        
         return PostComment.objects.all()
 
     def create(self, request, **kwargs):

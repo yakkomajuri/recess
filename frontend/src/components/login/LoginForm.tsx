@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Input, Button, notification } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '../../lib/api'
 import { useActions } from 'kea'
 import { userLogic } from '../../userLogic'
@@ -8,6 +8,12 @@ import { userLogic } from '../../userLogic'
 const LoginForm = () => {
     const navigate = useNavigate()
     const { loadUser } = useActions(userLogic)
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [searchParams, _] = useSearchParams()
+
+    const redirectURL = searchParams.get('redirect_path')
+
     const onFinish = async (values: any) => {
         try {
             document.cookie = 'authtoken=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
@@ -17,7 +23,7 @@ const LoginForm = () => {
             // should maybe have the backend send a Set-Cookie header?
             document.cookie = `authtoken=${response.data.token}; max-age=2592000; path=/`
             loadUser()
-            navigate('/timeline')
+            navigate(redirectURL || '/timeline')
         } catch (error) {
             notification.error({
                 message: 'Login failed',

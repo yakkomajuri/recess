@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from recess.models import Feed, EmailVerificationStatus
@@ -67,7 +67,7 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
-            return [IsAuthenticated()]
+            return [IsAdminUser()]
 
     def create(self, request):
         serializer = InternalUserSerializer(data=request.data)

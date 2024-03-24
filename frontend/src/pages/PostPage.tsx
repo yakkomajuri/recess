@@ -3,7 +3,7 @@ import { Col, Layout, Row } from 'antd'
 import { NewFeedModal } from '../components/new-feed-modal/NewFeedModal'
 import { SideNav } from '../components/SideNav'
 import { TimelineHeader } from '../components/timeline/TimelineHeader'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useActions, useValues } from 'kea'
 import { PostCard } from '../components/post/PostCard'
 import { PostComment, postLogic } from '../components/post/postLogic'
@@ -21,6 +21,12 @@ const PostPage = () => {
     const logic = postLogic({ postUuid: post_uuid })
     const { post, comments } = useValues(logic)
     const { loadPost } = useActions(logic)
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [searchParams, _] = useSearchParams()
+
+
+    const comment = decodeURIComponent(searchParams.get('comment_text') || '')
 
     useEffect(() => {
         loadPost()
@@ -44,7 +50,7 @@ const PostPage = () => {
                                 </Row>
                                 <Row style={{ marginBottom: 100 }}>
                                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                                        {!!post ? <CommentInput postUuid={post.post_uuid} /> : null}
+                                        {!!post ? <CommentInput postUuid={post.post_uuid} initialCommentText={comment} /> : null}
                                         <br />
                                         {(comments || []).map((comment: PostComment) => (
                                             <>
