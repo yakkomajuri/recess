@@ -27,16 +27,18 @@
 }
 
 .comment-author {
-    font-weight: 600; /* Slightly bolder */
-    color: #333; /* Dark text for contrast */
+    font-size: 16px;
+    font-weight: 600;
+    color: #333; 
 }
 
 .comment-date {
-    color: #999; /* Subdued color for the date */
-    font-size: 0.8rem; /* Smaller font size for date */
+    color: #999;
+    font-size: 0.8rem; 
 }
 
 .comment-content {
-    color: #555; /* Darker color for readability */
-    font-size: 0.9rem; /* Adjust font size for content readability */
+    color: #3c3c3c;
+    font-size: 16px;
+    line-height: 1.5em;
 }

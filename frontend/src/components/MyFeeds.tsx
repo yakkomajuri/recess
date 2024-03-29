@@ -31,7 +31,7 @@ export const MyFeeds = () => {
                 user!.feeds_owned.map((feed_uuid: string) => (
                     <Row style={{ width: '100%', marginBottom: 10 }}>
                         <Col style={{ width: '100%' }}>
-                            <FeedCard feedUuid={feed_uuid} />
+                            <FeedCard feedUuid={feed_uuid} displayFollowButton={false} />
                         </Col>
                     </Row>
                 ))

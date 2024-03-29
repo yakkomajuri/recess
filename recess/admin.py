@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import User, Feed, Post, PostComment
+from .models import User, Feed, Post, PostComment, EmailOptOut
 from django.urls import reverse
 from django.utils.html import format_html
 class CustomUserAdmin(admin.ModelAdmin):
@@ -29,8 +28,12 @@ class PostAdmin(admin.ModelAdmin):
 class PostCommentAdmin(admin.ModelAdmin):
     pass
 
+class EmailOptOutAdmin(admin.ModelAdmin):
+    list_display = ('email', 'opted_out')
+
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Feed, FeedAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(PostComment, PostCommentAdmin)
+admin.site.register(EmailOptOut, EmailOptOutAdmin)

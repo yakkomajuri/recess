@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Avatar, Row, Col, Button } from 'antd'
-import { UserOutlined, LinkOutlined } from '@ant-design/icons'
+import { UserOutlined, LinkOutlined, EditOutlined } from '@ant-design/icons'
 import { feedLogic } from './feedLogic'
 import { useActions, useValues } from 'kea'
 import { userLogic } from '../../userLogic'
@@ -9,7 +9,7 @@ import { Post } from '../post/postLogic'
 import { useNavigate } from 'react-router-dom'
 import { GravatarDefaultType, getGravatarUrl } from '../../lib/gravatar'
 
-const FeedCardTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; feedUuid: Post['feed_uuid'] }) => {
+const FeedCardTitle = ({ feedName, feedUuid, displayFollowButton }: { feedName: Post['feed_name'], feedUuid: Post['feed_uuid'], displayFollowButton: boolean }) => {
     const { user } = useValues(userLogic)
     const { loadUser } = useActions(userLogic)
     const navigate = useNavigate()
@@ -56,22 +56,25 @@ const FeedCardTitle = ({ feedName, feedUuid }: { feedName: Post['feed_name']; fe
                     {feedName}
                 </p>
             </Col>
-            <Col>
-                {user?.feeds_following.includes(feedUuid) ? (
-                    <Button type="primary" size="small" onClick={(e) => unfollowFeed(e as any, feedUuid)}>
-                        Following
-                    </Button>
-                ) : (
-                    <Button disabled={!user} type="dashed" size="small" onClick={(e) => followFeed(e as any, feedUuid)}>
-                        Follow
-                    </Button>
-                )}
-            </Col>
+            {displayFollowButton ? (
+                <Col>
+                    {user?.feeds_following.includes(feedUuid) ? (
+                        <Button type="primary" size="small" onClick={(e) => unfollowFeed(e as any, feedUuid)}>
+                            Following
+                        </Button>
+                    ) : (
+                        <Button disabled={!user} type="dashed" size="small" onClick={(e) => followFeed(e as any, feedUuid)}>
+                            Follow
+                        </Button>
+                    )}
+                </Col>
+            ) : null}
+
         </Row>
     )
 }
 
-const FeedCard = ({ feedUuid }: { feedUuid?: string }) => {
+const FeedCard = ({ feedUuid, displayFollowButton = true }: { feedUuid?: string, displayFollowButton?: boolean }) => {
     const logic = feedLogic({ feedUuid })
     const { feed } = useValues(logic)
 
@@ -103,11 +106,11 @@ const FeedCard = ({ feedUuid }: { feedUuid?: string }) => {
             <Card.Meta
                 avatar={
                     <Avatar
-                        style={{ border: '1px solid #efefff'}}
+                        style={{ border: '1px solid #efefff' }}
                         src={feed.feed_picture_url || getGravatarUrl(feed.feed_uuid, GravatarDefaultType.Retro)}
                     />
                 }
-                title={<FeedCardTitle feedName={feed.feed_name} feedUuid={feedUuid!} />}
+                title={<FeedCardTitle feedName={feed.feed_name} feedUuid={feedUuid!} displayFollowButton={displayFollowButton} />}
                 description={
                     <div>
                         <p style={{ marginBottom: 0, fontSize: 16, color: 'black' }}>{feed.feed_description}</p>
