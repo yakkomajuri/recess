@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Avatar, Row, Col, Button } from 'antd'
-import { UserOutlined, LinkOutlined, EditOutlined } from '@ant-design/icons'
+import { UserOutlined, LinkOutlined } from '@ant-design/icons'
 import { feedLogic } from './feedLogic'
 import { useActions, useValues } from 'kea'
 import { userLogic } from '../../userLogic'
