@@ -294,12 +294,12 @@ class PostCommentViewset(viewsets.ModelViewSet):
         # this would ideally be async with something like celery
         if feed_publisher_email is not None:
             
-            email_opt_out, _ = EmailOptOut.objects.get_or_create(email=request.user.email)
+            email_opt_out, _ = EmailOptOut.objects.get_or_create(email=feed_publisher_email)
             
             if not email_opt_out.opted_out:
                 
                 opt_out_link = request.build_absolute_uri(
-                    reverse('opt_out', kwargs={'email': urlsafe_base64_encode(force_bytes(request.user.email)), 'opt_out_token': urlsafe_base64_encode(force_bytes(email_opt_out.opt_out_token))})
+                    reverse('opt_out', kwargs={'email': urlsafe_base64_encode(force_bytes(feed_publisher_email)), 'opt_out_token': urlsafe_base64_encode(force_bytes(email_opt_out.opt_out_token))})
                 )
                 
                 subject = f"New comment on your post '{comment.post.post_name}'"
