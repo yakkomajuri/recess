@@ -11,7 +11,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 class FeedAdmin(admin.ModelAdmin):
-    list_display = ('feed_name', 'feed_url', 'feed_uuid')
+    list_display = ('feed_name', 'feed_url', 'feed_publisher_email', 'feed_uuid')
 
 
 class PostAdmin(admin.ModelAdmin):
