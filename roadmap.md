@@ -22,6 +22,7 @@
 - [ ] Import comments from HackerNews (and other select sources)
 - [ ] "My feeds" management
 - [ ] Export your data
+- [ ] Notifications for feed owners
 
 ### Technical features
 
@@ -38,3 +39,4 @@
 - [ ] Clean up too many requests
 - [ ] Better parsing of descriptions
 - [ ] Widget: Dark mode
+- [ ] Follow on Recess button
