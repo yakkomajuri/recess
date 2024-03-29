@@ -4,6 +4,7 @@ import { api } from '../../lib/api'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useActions } from 'kea'
 import { userLogic } from '../../userLogic'
+import { usePostHog } from 'posthog-js/react'
 
 interface SignupFormValues {
     username: string
@@ -15,6 +16,7 @@ interface SignupFormValues {
 const SignupForm = () => {
     const navigate = useNavigate()
     const { loadUser } = useActions(userLogic)
+    const posthog = usePostHog()
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, _] = useSearchParams()
@@ -33,6 +35,8 @@ const SignupForm = () => {
             )
             document.cookie = `authtoken=${response.data.token}`
             loadUser()
+            posthog.reset()
+            posthog.identify(username)
             navigate(redirectURL || '/timeline')
         } catch (error) {
             notification.error({

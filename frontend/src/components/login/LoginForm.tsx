@@ -4,17 +4,20 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '../../lib/api'
 import { useActions } from 'kea'
 import { userLogic } from '../../userLogic'
+import { usePostHog } from 'posthog-js/react'
 
 const LoginForm = () => {
     const navigate = useNavigate()
     const { loadUser } = useActions(userLogic)
+
+    const posthog = usePostHog()
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, _] = useSearchParams()
 
     const redirectURL = searchParams.get('redirect_path')
 
-    const onFinish = async (values: any) => {
+    const onFinish = async (values: { username: string, password: string}) => {
         try {
             document.cookie = 'authtoken=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
             const response = await api.post('/user/login', values, {
@@ -23,6 +26,8 @@ const LoginForm = () => {
             // should maybe have the backend send a Set-Cookie header?
             document.cookie = `authtoken=${response.data.token}; max-age=2592000; path=/`
             loadUser()
+            posthog.reset()
+            posthog.identify(values.username)
             navigate(redirectURL || '/timeline')
         } catch (error) {
             notification.error({

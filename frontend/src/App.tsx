@@ -12,7 +12,7 @@ import { ProfilePage } from './pages/ProfilePage'
 import { SearchResultsPage } from './pages/SearchResultsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PublicProfilePage } from './pages/PublicProfilePage'
-
+import { PostHogProvider } from 'posthog-js/react'
 
 const RedirectToLogin = () => {
     const location = useLocation();
@@ -24,7 +24,7 @@ const PostPageWrapper = ({ user }: { user: User | null }) => {
     const location = useLocation()
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [searchParams, _] = useSearchParams() 
+    const [searchParams, _] = useSearchParams()
 
     // this is used to enable our widget feature
     // unlike other restricted pages like Profile,
@@ -46,24 +46,31 @@ const App = () => {
     }
 
     return (
-        <Router>
-            <Routes>
-                <Route
-                    path="/"
-                    element={!!user ? <Navigate to="/timeline" replace /> : <Navigate to="/explore" replace />}
-                />
-                <Route path="/login" element={!!user ? <Navigate to="/timeline" replace /> : <LoginPage />} />
-                <Route path="/timeline" element={!!user ? <TimelinePage /> : <RedirectToLogin />} />
-                <Route path="/feeds" element={!!user ? <FollowingPage /> : <RedirectToLogin />} />
-                <Route path="/explore" element={<ExplorePage />} />
-                <Route path="/profile" element={!!user ? <ProfilePage /> : <RedirectToLogin />} />
-                <Route path="/feed/:feed_uuid" element={<FeedPage />} />
-                <Route path="/post/:post_uuid" element={<PostPageWrapper user={user} />} />
-                <Route path="/search/:search" element={<SearchResultsPage />} />
-                <Route path="/user/:username" element={<PublicProfilePage />} />
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-        </Router>
+        <PostHogProvider  
+            apiKey='phc_HZLpcgbHqjnUAlFuG8V9DjQnFdjhoj1o54NJXYJA037'
+            options={{
+                api_host: 'https://app.posthog.com'
+            }}
+        >
+            <Router>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={!!user ? <Navigate to="/timeline" replace /> : <Navigate to="/explore" replace />}
+                    />
+                    <Route path="/login" element={!!user ? <Navigate to="/timeline" replace /> : <LoginPage />} />
+                    <Route path="/timeline" element={!!user ? <TimelinePage /> : <RedirectToLogin />} />
+                    <Route path="/feeds" element={!!user ? <FollowingPage /> : <RedirectToLogin />} />
+                    <Route path="/explore" element={<ExplorePage />} />
+                    <Route path="/profile" element={!!user ? <ProfilePage /> : <RedirectToLogin />} />
+                    <Route path="/feed/:feed_uuid" element={<FeedPage />} />
+                    <Route path="/post/:post_uuid" element={<PostPageWrapper user={user} />} />
+                    <Route path="/search/:search" element={<SearchResultsPage />} />
+                    <Route path="/user/:username" element={<PublicProfilePage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+            </Router>
+        </PostHogProvider>
     )
 }
 

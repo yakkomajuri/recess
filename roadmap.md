@@ -30,6 +30,7 @@
 - [ ] Support Atom feeds
 - [ ] Support h-feed
 - [ ] Generate feeds for websites that don't have one
+- [ ] Integrate with IndieWeb protocols like Webmentions
 
 
 ### Improvements
@@ -40,3 +41,8 @@
 - [ ] Better parsing of descriptions
 - [ ] Widget: Dark mode
 - [ ] Follow on Recess button
+
+### Long term
+
+- [ ] Federation?
+- [ ] Structure repo for open source deployments

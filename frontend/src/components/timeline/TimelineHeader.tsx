@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useActions, useValues } from 'kea'
 import { userLogic } from '../../userLogic'
 import { getGravatarUrl } from '../../lib/gravatar'
+import { usePostHog } from 'posthog-js/react'
 
 const { Header } = Layout
 
@@ -14,12 +15,15 @@ const TimelineHeader = () => {
     const { setUser } = useActions(userLogic)
     const { user } = useValues(userLogic)
 
+    const posthog = usePostHog()
+
     const handleLogout = async (values: any) => {
         try {
             await api.post('/user/logout')
             document.cookie = 'authtoken=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
             document.cookie = 'csrftoken=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
             setUser(null)
+            posthog.reset()
             navigate('/login')
         } catch (error) {
             notification.error({

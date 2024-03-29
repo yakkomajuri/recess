@@ -14,6 +14,8 @@ Follow, discover, and engage with personal websites, blogs, and other sources of
 
 # Run locally
 
+> **Please note that while Recess is open source and you could deploy your own Recess, this repo was not structured in a way for simplified open source deployments (yet). As such you'd likely need to fork Recess to deploy your own version of it e.g. for internal use. I'll hopefully support this in the future.**
+
 The backend will run on `localhost:8000` and the frontend will be accessible on `localhost:3000` by default.
 
 ## Backend
