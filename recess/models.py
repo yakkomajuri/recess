@@ -115,6 +115,7 @@ class PostComment(models.Model):
 
 def lock_expiry_default():
     return datetime.datetime.now(tz=pytz.utc) + datetime.timedelta(minutes=1)
+
 class Lock(models.Model):
     lock_name = models.CharField(
         primary_key=True,
@@ -122,3 +123,11 @@ class Lock(models.Model):
     )
     owner_process_id = models.IntegerField(blank=True, null=True)
     lock_expiry = models.DateTimeField(default=lock_expiry_default)
+    
+class EmailOptOut(models.Model):
+    email = models.EmailField(unique=True, primary_key=True)
+    
+    # hacky as it's late but given it's just for opt out not
+    # safety this should be gucci
+    opt_out_token = models.UUIDField(default=uuid4)
+    opted_out = models.BooleanField(default=False)

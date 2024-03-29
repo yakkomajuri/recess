@@ -9,7 +9,6 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from recess.models import Feed, EmailVerificationStatus
 from django.core.exceptions import ValidationError
-from django.core.mail import send_mail
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -56,12 +55,18 @@ class UserSerializer(serializers.ModelSerializer):
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
+    # clean this!
     permission_classes_by_action = {'create': [AllowAny],
                                      'login': [AllowAny],
                                     'profile': [AllowAny],
+                                    'search': [AllowAny],
                                      'logout': [IsAuthenticated],
                                      'check': [IsAuthenticated],
-                                     'details': [IsAuthenticated]}
+                                     'details': [IsAuthenticated],
+                                     'send_verification_email': [IsAuthenticated],
+                                    'follow_feed': [IsAuthenticated],
+                                     'unfollow_feed': [IsAuthenticated],
+                                     'update_bio': [IsAuthenticated]}
     
     def get_permissions(self):
         try:

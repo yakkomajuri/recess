@@ -1,0 +1,14 @@
+<p>Your post {{ post.post_name }} got a new comment on <a href="https://app.recessfeed.com">Recess</a>:</p>
+
+<p>
+    <b>{{ post_comment.comment_author }} said:</b>
+    <i>
+        "{{ post_comment.comment_content }}"
+    </i>
+</p>
+
+<p>View in <a href="{{ post_link }}">Recess.</a></p>
+
+<small>You're receiving this email because you're set as the published or web master of the '{{ post_comment.post.feed.feed_name }}' RSS feed. Don't want to get any more email notifications like these? Opt out <a href="{{ opt_out_link }}">here</a>.</small>
+
+

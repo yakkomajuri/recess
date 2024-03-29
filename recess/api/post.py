@@ -7,9 +7,17 @@ from recess.models import Post, PostComment
 from rest_framework.decorators import action
 from recess.api.api_utils import get_paginated_queryset
 from recess.settings import DEFAULT_PAGE_SIZE
-from recess.models import User
+from recess.models import User, EmailOptOut
 from django.contrib.auth.models import AnonymousUser 
 from recess.utils.hash_utils import generate_md5_hash
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.urls import reverse
+from recess.settings import APP_HOST
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
+
 
 
 def _add_user_metadata_to_posts(posts, user: User):
@@ -264,6 +272,8 @@ class PostCommentViewset(viewsets.ModelViewSet):
         
         return PostComment.objects.all()
 
+
+    
     def create(self, request, **kwargs):
         post_uuid = request.data.get("comment_post_uuid")
         comment_content = request.data.get("comment_content")
@@ -278,6 +288,37 @@ class PostCommentViewset(viewsets.ModelViewSet):
         )
         post.post_comment_count += 1
         post.save()
+        
+        feed_publisher_email = comment.post.feed.feed_publisher_email
+        
+        # this would ideally be async with something like celery
+        if feed_publisher_email is not None:
+            
+            email_opt_out, _ = EmailOptOut.objects.get_or_create(email=request.user.email)
+            
+            if not email_opt_out.opted_out:
+                
+                opt_out_link = request.build_absolute_uri(
+                    reverse('opt_out', kwargs={'email': urlsafe_base64_encode(force_bytes(request.user.email)), 'opt_out_token': urlsafe_base64_encode(force_bytes(email_opt_out.opt_out_token))})
+                )
+                
+                subject = f"New comment on your post '{comment.post.post_name}'"
+                html_message = render_to_string('comment_notification_email.html', {
+                    'post_comment': comment,
+                    'opt_out_link': opt_out_link,
+                    'post_link': f'{APP_HOST}/post/{comment.post.post_uuid}'
+                })
+                
+                email = EmailMessage(
+                    subject,
+                    html_message,
+                    'yakko@recessfeed.com',
+                    [feed_publisher_email],
+                )
+                email.content_subtype = "html"
+                email.send()
+
+
         serializer = self.get_serializer(comment)
         return Response(serializer.data, status=201)
 

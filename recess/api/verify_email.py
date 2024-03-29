@@ -6,6 +6,7 @@ from django.utils.encoding import force_str
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from recess.models import EmailVerificationStatus, Feed
 from recess.settings import APP_HOST
+
 User = get_user_model()
 
 def verify(request, uidb64, token):
