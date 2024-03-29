@@ -306,7 +306,7 @@ class PostCommentViewset(viewsets.ModelViewSet):
                 html_message = render_to_string('comment_notification_email.html', {
                     'post_comment': comment,
                     'opt_out_link': opt_out_link,
-                    'post_link': f'{APP_HOST}/post/{comment.post.post_uuid}?utm_source=email_notification'
+                    'post_link': f'{APP_HOST}/post/{comment.post.post_uuid}?ref=email_notification'
                 })
                 
                 email = EmailMessage(
