@@ -17,6 +17,7 @@
         "html-to-text": "^9.0.5",
         "kea": "^3.1.6",
         "kea-loaders": "^3.0.1",
+        "posthog-js": "^1.128.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.22.1",
