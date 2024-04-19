@@ -15,6 +15,18 @@ const NewFeedModal = () => {
     const handleSubmit = async ({ feedName, feedUrl }: { feedName?: string; feedUrl?: string }) => {
         setLoadingFeed(true)
         try {
+            const feedUrlExistsResponse = await api.get(`/feed?feed_url=${feedUrl}`)
+
+            if (feedUrlExistsResponse.data.length > 0) {
+                navigate(`/feed/${feedUrlExistsResponse.data[0].feed_uuid}`)
+                notification.info({
+                    message: 'Feed with this URL already exists',
+                })
+                setLoadingFeed(false)
+                setIsModalOpen(false)
+                return
+            }
+
             const response = await api.post('/feed', {
                 feed_url: feedUrl,
             })

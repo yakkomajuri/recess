@@ -117,8 +117,14 @@ class FeedSerializer(serializers.ModelSerializer):
 
 
 class FeedViewset(viewsets.ModelViewSet):
-    queryset = Feed.objects.all().order_by("feed_uuid")
     serializer_class = FeedSerializer
+
+    def get_queryset(self):
+        feed_url = self.request.GET.get("feed_url", None)
+        if feed_url is not None:
+            return Feed.objects.filter(feed_url=feed_url).order_by("feed_uuid")
+
+        return Feed.objects.all().order_by("feed_uuid")
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve', 'trending', 'search']:
