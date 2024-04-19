@@ -90,7 +90,7 @@ class Post(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     post_url = URLField()
     post_name = models.CharField(max_length=500)
-    post_description = models.CharField(max_length=2000)
+    post_description = models.CharField(max_length=5000)
     post_published_date = models.DateTimeField()
     post_like_count = models.PositiveIntegerField(default=0)
     post_comment_count = models.PositiveIntegerField(default=0)

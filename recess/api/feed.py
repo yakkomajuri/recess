@@ -43,7 +43,6 @@ class FeedSerializer(serializers.ModelSerializer):
         feed_uuid = uuid4()
         
         rss_feed = feedparser.parse(validated_data["feed_url"])
-        
         try:
             feed_name = rss_feed.feed.title
         except Exception:
@@ -74,9 +73,12 @@ class FeedSerializer(serializers.ModelSerializer):
         elif hasattr(rss_feed.feed, "author") and hasattr(rss_feed.feed.author, "logo"):
             feed_picture_url = rss_feed.author.logo
         elif hasattr(rss_feed.feed, "link"):
-            res = requests.get(rss_feed.feed.link + "/favicon.ico")
-            if res.status_code == 200:
-                feed_picture_url = rss_feed.feed.link + "/favicon.ico"
+            try:
+                res = requests.get(rss_feed.feed.link + "/favicon.ico")
+                if res.status_code == 200:
+                    feed_picture_url = rss_feed.feed.link + "/favicon.ico"
+            except Exception as e:
+                print('Unable to get favicon', e)
 
         feed_data = {
             **validated_data,

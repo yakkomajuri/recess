@@ -7,6 +7,7 @@ recess/static
 recess/staticfiles
 static/
 planning.txt
+import-edge-cases.txt
 
 # Logs
 logs

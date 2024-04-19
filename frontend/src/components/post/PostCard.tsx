@@ -131,14 +131,14 @@ const PostCard = ({ post, isExplorePage }: { post: Post; isExplorePage?: boolean
             actions={[
                 <div
                     onClick={(e) => handleLikeButtonClick(e as any)}
-                    className={`like-post ${post.liked_by_user ? 'active' : ''}`}
+                    className={`like-post ${(updatedPost || post).liked_by_user ? 'active' : ''}`}
                 >
                     <LikeOutlined key="like" />
                     <span style={{ paddingLeft: 8 }}>{(updatedPost || post).post_like_count}</span>
                 </div>,
                 <div className="comment-post" onClick={() => document.getElementById('post-comment-textarea')?.focus()}>
                     <MessageOutlined key="comment" />
-                    <span style={{ paddingLeft: 8 }}>{post.post_comment_count}</span>
+                    <span style={{ paddingLeft: 8 }}>{(updatedPost || post).post_comment_count}</span>
                 </div>,
                 <span
                     key="link"
