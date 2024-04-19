@@ -121,6 +121,11 @@ const PostCard = ({ post, isExplorePage }: { post: Post; isExplorePage?: boolean
         }
     }
 
+    const formatPostDescription = (description: string): string => {
+        const ellipsis = post.post_description.length > 400 ? ' [...]' : ''
+        return removeHttpLinks(htmlToText(post.post_description)).slice(0, 400) + ellipsis
+    }
+
     return (
         <Card
             className="timeline-post-card"
@@ -177,7 +182,7 @@ const PostCard = ({ post, isExplorePage }: { post: Post; isExplorePage?: boolean
                         >
                             {post.post_name}
                         </p>
-                        <p>{removeHttpLinks(htmlToText(post.post_description))}</p>
+                        <p>{formatPostDescription(post.post_description)}</p>
                         <small>{new Date(post.post_published_date).toLocaleString()}</small>
                     </div>
                 }
